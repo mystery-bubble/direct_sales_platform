@@ -21,3 +21,11 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# settings file or folder
+.vscode
+jsconfig.json
+tsconfig.json
+*.config.js
+package-lock.json
+

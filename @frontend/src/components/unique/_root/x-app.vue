@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen" :style="`${ styles('bgColor') }`">
+  <div class="min-h-screen flex justify-center" :style="`${ styles('bgColor') }`">
     <slot></slot>
   </div>
 </template>
