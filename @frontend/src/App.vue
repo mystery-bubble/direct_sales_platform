@@ -1,6 +1,6 @@
 <template>
   <x-app bg:color="#C9BA98">
-    <x-container bg:color="#E7D7B4" horizontal-align="center">
+    <x-container bg:color="#E7D7B4" horizontal-align="stretch">
       <x-header></x-header>
       <x-content>
         <router-view></router-view>

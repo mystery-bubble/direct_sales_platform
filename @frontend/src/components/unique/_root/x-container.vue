@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`container min-h-screen flex flex-col align-${ this['horizontalAlign'] }${ this.fluid ? ' fluid' : '' }`"
+    :class="`container items-${ this['horizontalAlign'] }${ this.fluid ? ' fluid' : '' }`"
     :style="`${ styles('bgColor') }`"
   >
     <slot name="header"></slot>
@@ -43,7 +43,7 @@ export default {
 
 <style scoped lang="postcss">
 .container {
-  @apply w-10/12
+  @apply w-10/12 min-h-screen flex flex-col
 }
 .fluid {
   @apply w-full
