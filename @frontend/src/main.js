@@ -4,7 +4,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import "tailwindcss/tailwind.css"
+import "./styles/tailwind.css";
+import PurgeIconsVue from 'purge-icons-vue'
+
+Vue.use(PurgeIconsVue)
 
 Vue.config.productionTip = false
 

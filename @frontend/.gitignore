@@ -2,7 +2,6 @@
 node_modules
 /dist
 
-
 # local env files
 .env.local
 .env.*.local
@@ -24,8 +23,5 @@ pnpm-debug.log*
 
 # settings file or folder
 .vscode
-jsconfig.json
-tsconfig.json
-*.config.js
 package-lock.json
 

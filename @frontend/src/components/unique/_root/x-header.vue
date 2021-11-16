@@ -5,7 +5,9 @@
       <img src="@/assets/title_text.png" alt="西河堂御品顏LOGO_文字" class="text-img">
     </div>
     <div class="action-section">
-      <div>test</div>
+      <div class="btn-group">
+        <Icon icon="mdi:account" />
+      </div>
       <div>test</div>
     </div>
   </div>
@@ -43,5 +45,9 @@ export default {
   @apply pl-5;
 
   object-fit: none;
+}
+
+.btn-group {
+  @apply flex
 }
 </style>
