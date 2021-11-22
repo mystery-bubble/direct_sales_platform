@@ -1,11 +1,9 @@
 <template>
-  <div class="home">
-    <img class="inline-block" alt="Vue logo" src="../assets/logo.png">
-  </div>
+  <img src="@/assets/logo.png" alt="Vue">
 </template>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
 }
 </script>

@@ -1,36 +1,45 @@
 <template>
-  <div class="min-h-screen flex justify-center" :style="`${ styles('bgColor') }`">
-    <slot></slot>
-  </div>
+  <v-app>
+    <v-sheet class="x-app" :color="bgColor">
+      <x-container :bg-color="innerColor">
+        <x-header></x-header>
+        <v-main>
+          <slot></slot>
+        </v-main>
+        <x-footer></x-footer>
+      </x-container>
+    </v-sheet>
+  </v-app>
 </template>
 
 <script>
+import XHeader from "@/components/unique/_root/x-header.vue"
+import XContainer from "@/components/unique/_root/x-container.vue"
+
 export default {
   name: "x-app",
+  components: {
+    XContainer,
+    XHeader
+  },
   data: () => ({
 
   }),
   props: {
-    "bg:color": {
+    "bg-color": {
       type: String,
       required: true
-    }
-  },
-  methods: {
-    styles( cssname ) {
-      switch ( cssname ) {
-        case "bgColor":
-        case "backgroundColor":
-        case "background-color":
-          return `background-color: ${ this['bg:color'] };`
-        default:
-          return ""
-      }
+    },
+    "inner-color": {
+      type: String,
+      default: "transparent"
     }
   }
 }
 </script>
 
-<style>
-
+<style lang="postcss">
+.x-app {
+  @apply flex justify-center
+}
 </style>

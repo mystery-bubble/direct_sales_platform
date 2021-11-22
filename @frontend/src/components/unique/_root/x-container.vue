@@ -1,48 +1,23 @@
 <template>
-  <div
-    :class="`container items-${ this['horizontalAlign'] }${ this.fluid ? ' fluid' : '' }`"
-    :style="`${ styles('bgColor') }`"
-  >
-    <slot name="header"></slot>
+  <v-sheet class="x-container" :color="bgColor">
     <slot></slot>
-    <slot name="footer"></slot>
-  </div>
+  </v-sheet>
 </template>
 
 <script>
 export default {
   name: "x-container",
   props: {
-    fluid: {
-      type: Boolean,
-      default: false
-    },
-    "bg:color": {
+    "bg-color": {
       type: String,
       default: "transparent"
-    },
-    "horizontalAlign": {
-      type: String,
-      default: "start"
-    }
-  },
-  methods: {
-    styles( cssname ) {
-      switch ( cssname ) {
-        case "bgColor":
-        case "backgroundColor":
-        case "background-color":
-          return `background-color: ${ this['bg:color'] };`
-        default:
-          return ""
-      }  
     }
   }
 }
 </script>
 
 <style scoped lang="postcss">
-.container {
+.x-container {
   @apply w-10/12 min-h-screen flex flex-col
 }
 .fluid {

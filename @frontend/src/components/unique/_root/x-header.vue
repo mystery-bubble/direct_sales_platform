@@ -6,7 +6,7 @@
     </div>
     <div class="action-section">
       <div class="btn-group">
-        <Icon icon="mdi:account" />
+        <span class="iconify" data-icon="fa:home"></span>
       </div>
       <div>test</div>
     </div>
@@ -21,7 +21,7 @@ export default {
 
 <style lang="postcss">
 .header {
-  @apply mx-7 my-6 flex;
+  @apply px-7 py-6 flex;
 }
 
 .header > .logo-section {
@@ -34,7 +34,7 @@ export default {
 }
 
 .header > .action-section {
-  @apply flex flex-col flex-grow justify-between items-end;
+  @apply flex flex-col flex-grow items-end;
 }
 
 .logo-img {
