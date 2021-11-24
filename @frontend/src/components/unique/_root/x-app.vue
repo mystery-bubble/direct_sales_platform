@@ -2,11 +2,11 @@
   <v-app>
     <v-sheet class="x-app" :color="bgColor">
       <x-container :bg-color="innerColor">
-        <x-header></x-header>
+        <x-header />
         <v-main>
           <slot></slot>
         </v-main>
-        <x-footer></x-footer>
+        <x-footer />
       </x-container>
     </v-sheet>
   </v-app>
