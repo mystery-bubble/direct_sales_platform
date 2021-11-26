@@ -10,13 +10,37 @@
           <v-icon size="32">mdi-cart</v-icon>
         </div>
         <div class="guide-bar">
-          <div class="active-container"></div>
-          <div :class="{ 'active': item.isActive }" class="bar-item" v-for="( item, index ) in guideBarItems" :key="`item-${ index }`">{{ item.title }}</div>
+          <div
+            class="active-container"
+            :style="`left: ${ 20 + this.guideBarActivated * 124 }px; transition: left 275ms ease-in-out`"
+          />
+          <div
+            @click="stateChange( guideBarActivated, index )" 
+            v-for="( item, index ) in guideBarItems"
+            :key="`bar-item-${ index }`"
+            :class="{ 'active': ( guideBarActivated === index ) }"
+            class="bar-item"
+          >
+            {{ item.title }}
+          </div>
         </div>
       </div>
     </div>
-    <div class="sub-part">
-      <a>test</a>
+    <div
+      class="sub-part"
+      @mouseenter="verticalMarquee.isPaused = true"
+      @mouseleave="verticalMarquee.isPaused = false"
+    >
+      <a
+        @click="goto( item.route )"
+        v-for="( item, index ) in verticalMarquee.items"
+        :key="`marquee-item-${ index }`"
+        class="vertical-marquee-item"
+        :class="{ 'auto-scrolling': !verticalMarquee.disableTransition }"
+        :style="`transform: translate( 0px, ${ verticalMarquee.now * -32 }px );`"
+      >
+        {{ item.text }}
+      </a>
     </div>
   </div>
 </template>
@@ -24,33 +48,119 @@
 <script>
 export default {
   data: () => ({
+    guideBarActivated: 0,
     guideBarItems: [
       {
         title: "商品總覽",
         route: "/",
-        isActive: true
       },
       {
         title: "促銷活動",
-        route: "/",
-        isActive: false
+        route: "/test",
       },
       {
         title: "關於我們",
         route: "/",
-        isActive: false
       },
       {
         title: "幫助中心",
         route: "/",
-        isActive: false
       }
-    ]
-  })
+    ],
+    verticalMarquee: {
+      now: 0,
+      timer: undefined,
+      isPaused: false,
+      delay: 3000,
+      disableTransition: false,
+      items: [
+        {
+          text: "test 0",
+          route: "/"
+        },
+        {
+          text: "test 1",
+          route: "/test"
+        },
+        {
+          text: "test 2",
+          route: "/"
+        }
+      ]
+    }
+  }),
+  methods: {
+    initialize() {
+      // set default value
+      this.verticalMarquee.items.push( this.verticalMarquee.items[ 0 ] )
+
+      // call api
+    },
+    stateChange( oldIndex, newIndex ) {
+      if ( oldIndex === newIndex ) {
+        return
+      }
+      else {
+        this.guideBarActivated = newIndex
+        this.goto( this.guideBarItems[ newIndex ].route )
+      }
+    },
+    startTimer( oper ) {
+      var timeout = oper()
+      this.verticalMarquee.timer = setTimeout( () => {
+        this.startTimer( this.marqueeIndexChange )
+      }, timeout )
+    },
+    marqueeIndexChange() {
+      if ( this.verticalMarquee.isPaused ) {
+        return 3000
+      }
+      else {
+        if ( this.verticalMarquee.now !== this.verticalMarquee.items.length - 1 ) {
+          ++this.verticalMarquee.now
+          return 3000
+        }
+        else {
+          this.verticalMarquee.now = 0
+          return 0
+        }
+      }
+    },
+    goto( route ) {
+      // console.log( route )
+      if ( this.$route.path === route ) {
+        return
+      }
+      else {
+        this.$router.push( route )
+      }
+    }
+  },
+  mounted() {
+    console.log( this.$route.path )
+    this.initialize()
+    setTimeout( () => {
+      this.startTimer( this.marqueeIndexChange );
+    }, 3000 )
+  },
+  watch: {
+    "verticalMarquee.now" ( oldValue, newValue ) {
+      if ( newValue == this.verticalMarquee.items.length - 1 ) {
+        this.verticalMarquee.disableTransition = true
+      }
+      else {
+        this.verticalMarquee.disableTransition = false
+      }
+    }
+  }
 }
 </script>
 
 <style lang="postcss">
+.auto-scrolling {
+  transition: transform 200ms ease-in;
+}
+
 .header {
   @apply px-7 py-6 flex-col;
 }
@@ -73,10 +183,15 @@ export default {
 }
 
 .sub-part {
-  @apply flex items-center mt-2 mx-1 py-2 px-4 h-11;
-
+  @apply overflow-y-hidden mt-2 mx-1 px-4 h-11;
+  
+  padding-top: 0.7rem;
   background-color: rgba(174, 155, 113, .3);
   border-radius: 8px;
+}
+
+.sub-part > .vertical-marquee-item {
+  @apply block mb-2;
 }
 
 .logo-img {
@@ -94,7 +209,7 @@ export default {
 }
 
 .guide-bar {
-  @apply flex;
+  @apply flex mb-1;
 
   position: relative;
 }
@@ -106,15 +221,17 @@ export default {
   left: 20px;
   background-color: #786F5C;
   border-radius: 8px;
+  transition: left 200ms ease-in-out;
 }
 
 .guide-bar > .bar-item {
-  @apply mb-1 ml-5 px-5 py-2;
+  @apply ml-5 px-5 py-2;
 
   font-weight: bold;
   color: rgba(66, 60, 49, 1);
   z-index: 1;
   cursor: pointer;
+  transition: color 600ms ease-out
 }
 
 .active {
