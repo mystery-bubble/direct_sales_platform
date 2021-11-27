@@ -7,23 +7,37 @@
       </div>
       <div class="action-section">
         <div class="btn-group">
-          <v-icon size="32">mdi-cart</v-icon>
+          <v-icon large size="32">mdi-cart</v-icon>
         </div>
         <div class="guide-bar">
           <div
             class="active-container"
-            :style="`left: ${ 20 + this.guideBarActivated * 124 }px; transition: left 275ms ease-in-out`"
+            :style="`left: ${ 20 + this.guideBar.activated * 124 }px; transition: left 275ms ease-in-out`"
           />
           <div
-            @click="stateChange( guideBarActivated, index )" 
-            v-for="( item, index ) in guideBarItems"
+            @click="stateChange( guideBar.activated, index )" 
+            v-for="( item, index ) in guideBar.items"
             :key="`bar-item-${ index }`"
-            :class="{ 'active': ( guideBarActivated === index ) }"
+            :class="{ 'active': ( guideBar.activated === index ) }"
             class="bar-item"
           >
             {{ item.title }}
           </div>
         </div>
+      </div>
+      <div class="foldable-action-section">
+        <div @click="folding" class="fold-activator">
+          <v-icon class="activator-icon">mdi-menu</v-icon>
+        </div>
+        <v-expand-transition>
+          <div v-if="!foldableAction.isFold">
+            <div>test</div>
+            <div>test</div>
+            <div>test</div>
+            <div>test</div>
+            <div>test</div>
+          </div>
+        </v-expand-transition>
       </div>
     </div>
     <div
@@ -48,25 +62,27 @@
 <script>
 export default {
   data: () => ({
-    guideBarActivated: 0,
-    guideBarItems: [
-      {
-        title: "商品總覽",
-        route: "/",
-      },
-      {
-        title: "促銷活動",
-        route: "/test",
-      },
-      {
-        title: "關於我們",
-        route: "/",
-      },
-      {
-        title: "幫助中心",
-        route: "/",
-      }
-    ],
+    guideBar: {
+      activated: 0,
+      items: [
+        {
+          title: "商品總覽",
+          route: "/",
+        },
+        {
+          title: "促銷活動",
+          route: "/test",
+        },
+        {
+          title: "關於我們",
+          route: "/",
+        },
+        {
+          title: "幫助中心",
+          route: "/",
+        }
+      ]
+    },
     verticalMarquee: {
       now: 0,
       timer: undefined,
@@ -87,6 +103,9 @@ export default {
           route: "/"
         }
       ]
+    },
+    foldableAction: {
+      isFold: true  
     }
   }),
   methods: {
@@ -101,8 +120,8 @@ export default {
         return
       }
       else {
-        this.guideBarActivated = newIndex
-        this.goto( this.guideBarItems[ newIndex ].route )
+        this.guideBar.activated = newIndex
+        this.goto( this.guideBar.items[ newIndex ].route )
       }
     },
     startTimer( oper ) {
@@ -134,6 +153,9 @@ export default {
       else {
         this.$router.push( route )
       }
+    },
+    folding() {
+      this.foldableAction.isFold = !this.foldableAction.isFold;
     }
   },
   mounted() {
@@ -166,24 +188,46 @@ export default {
 }
 
 .main-part > .logo-section {
-  @apply flex justify-end px-7 py-5 m-1;
+  @apply flex justify-center px-7 py-5 xl:m-1 w-full;
 
   height: 170px;
-  width: 465px;
   background-color: rgba(174, 155, 113, .3);
   border-radius: 24px;
 }
 
+@screen xl {
+  .main-part > .logo-section {
+    width: 465px;
+  }
+}
+
 .main-part > .action-section {
-  @apply flex flex-col flex-grow justify-between items-end;
+  @apply flex-col flex-grow justify-between items-end hidden xl:flex ;
+}
+
+.main-part > .foldable-action-section {
+  @apply flex flex-col xl:hidden mt-3 overflow-hidden;
+
+  background-color: rgba(174, 155, 113, .3);
+  border-radius: 12px;
+}
+
+.foldable-action-section > .fold-activator {
+  @apply table text-center h-9;
+
+  background-color: rgba(174, 155, 113, .8);
+}
+
+.foldable-action-section > .fold-activator > .activator-icon {
+  @apply table-cell align-middle;
 }
 
 .main-part {
-  @apply flex;
+  @apply flex flex-col xl:flex-row;
 }
 
 .sub-part {
-  @apply overflow-y-hidden mt-2 mx-1 px-4 h-11;
+  @apply overflow-y-hidden mt-3 xl:mx-1 px-4 h-11;
   
   padding-top: 0.7rem;
   background-color: rgba(174, 155, 113, .3);
@@ -195,13 +239,15 @@ export default {
 }
 
 .logo-img {
-  object-fit: none;
+  @apply object-contain;
+  
+  max-width: 30%;
 }
 
 .text-img {
-  @apply pl-5;
+  @apply object-contain pl-3 md:pl-5;
 
-  object-fit: none;
+  max-width: 70%;
 }
 
 .btn-group {
