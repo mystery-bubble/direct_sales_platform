@@ -4,12 +4,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import "tailwindcss/tailwind.css"
+import "./styles/tailwind.css";
+import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

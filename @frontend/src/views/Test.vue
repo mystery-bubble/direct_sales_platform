@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/logo.png" alt="Vue">
+  <div>Test</div>
 </template>
 
 <script>
