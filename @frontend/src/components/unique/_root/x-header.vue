@@ -30,12 +30,21 @@
           <v-icon class="activator-icon">mdi-menu</v-icon>
         </div>
         <v-expand-transition>
-          <div v-if="!foldableAction.isFold">
-            <div>test</div>
-            <div>test</div>
-            <div>test</div>
-            <div>test</div>
-            <div>test</div>
+          <div v-show="!foldableAction.isFold">
+            <div
+              @click="goto( '/cart' )"
+              class="action-item"
+            >
+              購物車
+            </div>
+            <div
+              @click="goto( item.route )"
+              class="action-item"
+              v-for="( item, index ) in guideBar.items"
+              :key="`item-${ index }`"
+            >
+              {{ item.title }}
+            </div>
           </div>
         </v-expand-transition>
       </div>
@@ -151,6 +160,7 @@ export default {
         return
       }
       else {
+        this.foldableAction.isFold = true
         this.$router.push( route )
       }
     },
@@ -213,13 +223,21 @@ export default {
 }
 
 .foldable-action-section > .fold-activator {
-  @apply table text-center h-9;
+  @apply table text-center h-9 cursor-pointer;
 
   background-color: rgba(174, 155, 113, .8);
 }
 
 .foldable-action-section > .fold-activator > .activator-icon {
   @apply table-cell align-middle;
+}
+
+.action-item {
+  @apply text-xl flex justify-center items-center h-14 font-extrabold cursor-pointer;
+}
+
+.action-item:hover {
+  background-color: rgba(231, 215, 180, .7);
 }
 
 .main-part {
@@ -277,7 +295,7 @@ export default {
   color: rgba(66, 60, 49, 1);
   z-index: 1;
   cursor: pointer;
-  transition: color 600ms ease-out
+  transition: color 600ms ease-out;
 }
 
 .active {
