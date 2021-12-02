@@ -169,7 +169,6 @@ export default {
     }
   },
   mounted() {
-    console.log( this.$route.path )
     this.initialize()
     setTimeout( () => {
       this.startTimer( this.marqueeIndexChange );
@@ -194,7 +193,7 @@ export default {
 }
 
 .header {
-  @apply px-7 py-6 flex-col;
+  @apply px-7 py-6 pb-3 flex-col;
 }
 
 .main-part > .logo-section {

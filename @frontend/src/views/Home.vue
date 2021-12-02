@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/logo.png" alt="Vue">
+  <router-link class="text-xl" to="product">test</router-link>
 </template>
 
 <script>
