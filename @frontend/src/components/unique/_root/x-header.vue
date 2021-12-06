@@ -187,6 +187,6 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style scoped lang="postcss">
 @import "../../../styles/components/unique/_root/x-header.pcss";
 </style>
