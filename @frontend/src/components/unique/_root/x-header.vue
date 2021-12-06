@@ -32,7 +32,7 @@
         <v-expand-transition>
           <div v-show="!foldableAction.isFold">
             <div
-              @click="goto( '/cart' )"
+              @click="goto('/cart')"
               class="action-item"
             >
               購物車
