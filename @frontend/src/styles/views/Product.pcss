@@ -1,0 +1,53 @@
+.view.product {
+  @apply flex flex-col bg-custom-light-trn-1 p-3;
+
+  border-radius: 12px;
+}
+
+.product.image {
+    @apply border-2 border-custom-dark-trn-1 w-full flex justify-center items-center overflow-hidden;
+
+    border-radius: 8px;
+    height: auto;
+}
+
+.product.title-text {
+  @apply max-w-full text-justify font-bold break-all mt-2;
+
+  font-size: 1.2rem
+}
+
+.product.price {
+  @apply text-3xl font-bold text-custom-black my-2;
+}
+
+.product.type > .type-title {
+  @apply font-bold text-lg
+}
+
+.product.section-price-sold {
+  @apply flex justify-between items-center mx-1
+}
+
+.product.section-price-sold > .product.sold {
+  @apply px-2 py-1 bg-custom-darker-trn-1 text-custom-white;
+
+  border-radius: 6px
+}
+
+.type-selectors {
+  @apply flex flex-wrap
+}
+
+.type-selectors > .selectors-item {
+  @apply px-3 py-1 border border-custom-darker;
+
+  border-radius: 6px;
+}
+
+.selectors-item.active {
+  @apply bg-custom-black border-0 border-custom-black
+}
+
+.product.description {
+}

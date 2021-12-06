@@ -17,10 +17,5 @@ export default {
 </script>
 
 <style scoped lang="postcss">
-.x-container {
-  @apply w-10/12 min-h-screen flex flex-col
-}
-.fluid {
-  @apply w-full
-}
+@import "../../../styles/components/unique/_root/x-container.pcss";
 </style>

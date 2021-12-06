@@ -39,7 +39,5 @@ export default {
 </script>
 
 <style lang="postcss">
-.x-app {
-  @apply flex justify-center
-}
+@import "../../../styles/components/unique/_root/x-app.pcss";
 </style>
