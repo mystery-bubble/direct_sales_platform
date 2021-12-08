@@ -7,7 +7,7 @@
       </div>
       <div class="action-section">
         <div class="btn-group">
-          <v-icon large size="32">mdi-cart</v-icon>
+          <Icon icon="mdi:cart" class="action cart" />
         </div>
         <div class="guide-bar">
           <div
@@ -27,26 +27,26 @@
       </div>
       <div class="foldable-action-section">
         <div @click="folding" class="fold-activator">
-          <v-icon class="activator-icon">mdi-menu</v-icon>
+          <Icon icon="mdi:menu" class="activator-icon" />
         </div>
-        <v-expand-transition>
-          <div v-show="!foldableAction.isFold">
-            <div
-              @click="goto('/cart')"
-              class="action-item"
-            >
-              購物車
+          <expand-transition>
+            <div v-show="!foldableAction.isFold">
+              <div
+                @click="goto('/cart')"
+                class="action-item"
+              >
+                購物車
+              </div>
+              <div
+                @click="goto( item.route )"
+                class="action-item"
+                v-for="( item, index ) in guideBar.items"
+                :key="`item-${ index }`"
+              >
+                {{ item.title }}
+              </div>
             </div>
-            <div
-              @click="goto( item.route )"
-              class="action-item"
-              v-for="( item, index ) in guideBar.items"
-              :key="`item-${ index }`"
-            >
-              {{ item.title }}
-            </div>
-          </div>
-        </v-expand-transition>
+          </expand-transition>
       </div>
     </div>
     <div
@@ -69,7 +69,12 @@
 </template>
 
 <script>
+import ExpandTransition from "@/components/common/transitions/expand-transition.vue"
+
 export default {
+  components: {
+    ExpandTransition
+  },
   data: () => ({
     guideBar: {
       activated: 0,

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-sheet class="x-app" :color="bgColor">
+    <div class="x-app" :style="`background-color: ${ bgColor }`">
       <x-container :bg-color="innerColor">
         <x-header />
         <v-main>
@@ -8,7 +8,7 @@
         </v-main>
         <x-footer />
       </x-container>
-    </v-sheet>
+    </div>
   </v-app>
 </template>
 

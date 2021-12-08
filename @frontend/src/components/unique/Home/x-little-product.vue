@@ -1,32 +1,41 @@
 <template>
   <div class="component little-product">
     <div class="little-product-image">
-      <img :src="info.imgPath" />
+      <img :src="img" />
     </div>
     <div class="little-product-title">
-      {{ info.title }}
+      {{ title }}
     </div>
     <div class="little-product-numbers">
       <div class="number sold">已售出 {{ shortsold }}</div>
-      <div class="number price">${{ info.price }}</div>
+      <div class="number price">${{ price }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    info: {
-      imgPath: "https://via.placeholder.com/1000",
-      title: "testsetsetsetsetsetsetsetsetsetsetsetestsetsetsetsetsetsetsetsetsetsetse",
-      sold: 99999,
-      price: 99999
+  props: {
+    img: {
+      type: String
     },
-    over: 9999
-  }),
+    title: {
+      type: String
+    },
+    sold: {
+      type: Number
+    },
+    price: {
+      type: Number
+    },
+    over: {
+      type: Number,
+      default: 9999
+    }
+  },
   computed: {
     shortsold() {
-      return this.info.sold > this.over ? `${ this.over }+` : this.info.sold
+      return this.sold > this.over ? `${ this.over }+` : this.info.sold
     }
   }
 }
