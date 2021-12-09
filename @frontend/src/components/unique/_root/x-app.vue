@@ -1,15 +1,13 @@
 <template>
-  <v-app>
-    <div class="x-app" :style="`background-color: ${ bgColor }`">
-      <x-container :bg-color="innerColor">
-        <x-header />
-        <v-main>
-          <slot></slot>
-        </v-main>
-        <x-footer />
-      </x-container>
-    </div>
-  </v-app>
+  <div class="x-app" :style="`background-color: ${ bgColor }`">
+    <x-container :bg-color="innerColor">
+      <x-header />
+      <div class="x-main">
+        <slot></slot>
+      </div>
+      <x-footer />
+    </x-container>
+  </div>
 </template>
 
 <script>

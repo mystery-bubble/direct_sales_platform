@@ -18,10 +18,24 @@
         />
       </div>
     </div>
-    <div class="home disable-mask" v-show="floatOpening" />
+    <div 
+      class="home disable-mask"
+      @click="changeFloatState"
+      v-show="floatOpening"
+    />
     <div class="home floating-group">
-      <div class="floating-menu" v-show="floatOpening">test</div>
-      <v-icon class="floating-button" @click="changeFloatState" x-large color="#F3F4F5">mdi-menu</v-icon>
+      <div
+        ref="floatingMenu"
+        class="floating-menu"
+        :class="{ 'open': floatOpening, 'close': !floatOpening }"
+      >
+        <span v-show="floatContentVisibilty">
+          <div class="menu-item">test</div>
+        </span>
+      </div>
+      <div class="floating-button" @click="changeFloatState">
+        <Icon class="button-icon" icon="mdi:toolbox" />
+      </div>
     </div>
   </div>
 </template>
@@ -32,10 +46,15 @@ import XLittleProduct from "@/components/unique/Home/x-little-product.vue";
 export default {
   name: "Home",
   components: {
-    XLittleProduct,
+    XLittleProduct
   },
   data: () => ({
     floatOpening: false,
+    floatContentVisibilty: false,
+    stopScrolling: {
+      wheelOpt: undefined,
+      wheelEvent: undefined
+    },
     isFocused: false,
     products: Array(30).fill(
       {
@@ -52,6 +71,57 @@ export default {
     },
     changeFloatState() {
       this.floatOpening = !this.floatOpening
+      setTimeout( () => {
+        this.floatContentVisibilty = !this.floatContentVisibilty
+      }, 140 )
+    },
+    preventDefault( e, keyMode = false ){  
+      if ( !keyMode ) {
+        e.preventDefault()
+      }
+      else {
+        var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+        if ( keys[ e.keyCode ] ) {
+          this.preventDefault( e );
+          return false;
+        }
+      }
+    }
+  },
+  mounted() {
+    var supportsPassive = false;
+    try {
+      window.addEventListener( "test", null, Object.defineProperty( 
+        {},
+        'passive',
+        { 
+          get: function () {
+            supportsPassive = true;
+            return null 
+          } 
+        }
+      ));
+    }
+    catch(e) {
+      console.error( e )
+    }
+    this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
+    this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+  },
+  watch: {
+    floatOpening( newVal ) {
+      if ( newVal ) {
+        window.addEventListener( 'DOMMouseScroll', this.preventDefault, false );
+        window.addEventListener( this.stopScrolling.wheelEvent, this.preventDefault, this.stopScrolling.wheelOpt );
+        window.addEventListener( 'touchmove', this.preventDefault, this.stopScrolling.wheelOpt );
+        window.addEventListener( 'keydown', this.preventDefaultForScrollKeys, false );
+      }
+      else {
+        window.removeEventListener( 'DOMMouseScroll', this.preventDefault, false );
+        window.removeEventListener( this.stopScrolling.wheelEvent, this.preventDefault, this.stopScrolling.wheelOpt ); 
+        window.removeEventListener( 'touchmove', this.preventDefault, this.stopScrolling.wheelOpt );
+        window.removeEventListener( 'keydown', this.preventDefaultForScrollKeys, false );
+      }
     }
   }
 };

@@ -44,21 +44,48 @@
 }
 
 .home.floating-group {
-  @apply flex flex-row items-end fixed bottom-3 right-3;
+  @apply flex flex-row items-end fixed bottom-3 right-3 xl:hidden;
 
   z-index: 2;
 }
 
 .floating-button {
- @apply rounded-full bg-custom-black ml-2;
+  @apply rounded-full bg-custom-black ml-2;
 
  width: 65px;
  height: 65px;
 }
 
-.floating-menu {
-  @apply border border-custom-black bg-custom-lighter;
+.floating-button > .button-icon {
+  @apply relative text-4xl text-custom-white;
 
-  min-height: 60vh;
-  min-width: 50vw;
+  top: 13.5px;
+  left: 13.5px;
+}
+
+.floating-menu {
+  @apply bg-custom-lighter;
+
+  border-radius: 8px;
+  transition: transform 0.4s ease-in-out;
+  height: 60vh;
+  width: 50vw;
+}
+
+.floating-menu.open {
+  transform-origin: bottom right;
+  transform: scale( 1 );
+}
+
+.floating-menu.close {
+  transform-origin: bottom right;
+  transform: scale( 0 )
+}
+
+.fade-enter-active .fade-leave-active {
+  transition: opacity 5s;
+}
+
+.fade-enter .fade-leave-to {
+  opacity: 0;
 }
