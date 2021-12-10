@@ -1,12 +1,32 @@
 <template>
   <div class="view home">
-    <div class="home list-section">
-      <div class="search-box">
-        <div class="inner" :class="{ 'focus': isFocused }">
-          <icon icon="mdi:magnify" class="search-icon" />
-          <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
-        </div>
+    <div class="search-box">
+      <div class="inner" :class="{ 'focus': isFocused }">
+        <icon icon="mdi:magnify" class="search-icon" />
+        <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
       </div>
+    </div>
+    <div class="horizontal-types">
+      <div class="arrow">
+        <Icon icon="mdi:chevron-left" />
+      </div>
+      <div class="types-container">
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+        <div class="type-item">test</div>
+      </div>
+      <div class="arrow">
+        <Icon icon="mdi:chevron-right" />
+      </div>
+    </div>
+    <div class="home list-section">
       <div class="list container">
         <x-little-product
           v-for="( product, index ) in products"
@@ -18,29 +38,33 @@
         />
       </div>
     </div>
-    <div 
-      class="home disable-mask"
-      @click="changeFloatState"
-      v-show="floatOpening"
-    />
+    <transition name="fade">
+      <div 
+        class="home disable-mask"
+        @click="changeFloatState"
+        v-show="floatOpening"
+      />
+    </transition>
     <div class="home floating-group">
-      <div
-        ref="floatingMenu"
-        class="floating-menu"
-        :class="{ 'open': floatOpening, 'close': !floatOpening }"
-      >
-        <span v-show="floatContentVisibilty">
-          <div class="menu-item">test</div>
+      <transition name="float-expand">
+        <span
+          class="floating-menu"
+          v-show="floatOpening"
+        >
+          <span v-show="floatOpening">
+            <div class="menu-item">test</div>
+          </span>
         </span>
-      </div>
+      </transition>
       <div class="floating-button" @click="changeFloatState">
-        <Icon class="button-icon" icon="mdi:toolbox" />
+        <Icon class="button-icon" icon="mdi:filter" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// Stop scrolling solution from https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
 import XLittleProduct from "@/components/unique/Home/x-little-product.vue";
 
 export default {
@@ -58,7 +82,7 @@ export default {
     isFocused: false,
     products: Array(30).fill(
       {
-        path: "https://via.placeholder.com/1000",
+        path: "https://via.placeholder.com/350",
         title: "testsetsetsetsetsetsetsetsetsetsetsetestsetsetsetsetsetsetsetsetsetsetse",
         sold: 10000,
         price: 99999

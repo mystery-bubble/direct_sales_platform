@@ -1,15 +1,15 @@
 .view.home {
-  @apply flex;
+  @apply flex flex-col;
 }
 
 .search-box {
-  @apply p-1 lg:p-2 bg-custom-white mb-3;
+  @apply p-1 lg:p-2 bg-custom-white mb-2;
 
   border-radius: 8px;
 }
 
 .search-box > .inner {
-  @apply flex flex-row justify-between items-center bg-transparent py-1.5 px-2  text-lg;
+  @apply flex flex-row justify-between items-center bg-transparent py-1.5 px-2 text-lg;
 
   border-radius: 8px;
 }
@@ -31,6 +31,34 @@
   @apply ml-2 focus:outline-none flex-grow bg-transparent;
 }
 
+.horizontal-types {
+  @apply flex flex-row overflow-x-hidden justify-between items-center mb-2 2xl:hidden;
+}
+
+.horizontal-types > .arrow {
+	@apply bg-custom-white p-3 text-2xl;
+
+	border-radius: 8px;
+}
+
+.horizontal-types > .types-container {
+	@apply overflow-hidden bg-custom-white text-center flex-grow py-2 px-2 mx-1.5 whitespace-nowrap;
+	
+	grid-auto-rows: auto;
+	border-radius: 8px;
+}
+
+.horizontal-types > .types-container > .type-item {
+	@apply w-1/2 inline-block mr-2 text-custom-black bg-custom-dark-trn-1 font-bold text-lg py-0.5;
+
+	width: 32.25%;
+	border-radius: 8px;
+}
+
+.horizontal-types > .types-container > .type-item.active {
+	@apply bg-custom-black text-custom-white
+}
+
 .list.container {
   @apply grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 py-5 px-6 bg-custom-white;
 
@@ -38,15 +66,16 @@
 }
 
 .home.disable-mask {
-  @apply bg-black opacity-70 w-screen h-screen fixed top-0 left-0;
+  @apply w-screen h-screen fixed top-0 left-0;
 
   z-index: 1;
+	background-color: rgba( 0, 0, 0, .7 )
 }
 
 .home.floating-group {
   @apply flex flex-row items-end fixed bottom-3 right-3 xl:hidden;
 
-  z-index: 2;
+  z-index: 1;
 }
 
 .floating-button {
@@ -59,33 +88,338 @@
 .floating-button > .button-icon {
   @apply relative text-4xl text-custom-white;
 
-  top: 13.5px;
-  left: 13.5px;
+  top: 16.8px;
+  left: 14.48px;
 }
 
 .floating-menu {
-  @apply bg-custom-lighter;
+  @apply p-3 bg-custom-lighter;
 
   border-radius: 8px;
-  transition: transform 0.4s ease-in-out;
   height: 60vh;
   width: 50vw;
 }
 
-.floating-menu.open {
+.float-expand-enter-active {
   transform-origin: bottom right;
-  transform: scale( 1 );
+	animation: floatExpand .2s;
 }
 
-.floating-menu.close {
+.float-expand-leave-active {
   transform-origin: bottom right;
-  transform: scale( 0 )
+	animation: floatExpand .2s reverse;
 }
 
-.fade-enter-active .fade-leave-active {
-  transition: opacity 5s;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .25s;
 }
 
-.fade-enter .fade-leave-to {
+.fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+@keyframes floatExpand {
+	0% {
+		transform: scale(0);
+	}
+	1% {
+		transform: scale(0.039403990000000055);
+	}
+	2% {
+		transform: scale(0.07763184000000012);
+	}
+	3% {
+		transform: scale(0.11470719000000007);
+	}
+	4% {
+		transform: scale(0.15065344000000003);
+	}
+	5% {
+		transform: scale(0.18549375);
+	}
+	6% {
+		transform: scale(0.21925104000000006);
+	}
+	7% {
+		transform: scale(0.25194799000000023);
+	}
+	8% {
+		transform: scale(0.2836070399999999);
+	}
+	9% {
+		transform: scale(0.3142503899999999);
+	}
+	10% {
+		transform: scale(0.3438999999999999);
+	}
+	11% {
+		transform: scale(0.3725775899999999);
+	}
+	12% {
+		transform: scale(0.40030464);
+	}
+	13% {
+		transform: scale(0.42710238999999994);
+	}
+	14% {
+		transform: scale(0.45299184000000015);
+	}
+	15% {
+		transform: scale(0.4779937500000001);
+	}
+	16% {
+		transform: scale(0.5021286400000001);
+	}
+	17% {
+		transform: scale(0.5254167900000001);
+	}
+	18% {
+		transform: scale(0.5478782399999998);
+	}
+	19% {
+		transform: scale(0.5695327899999998);
+	}
+	20% {
+		transform: scale(0.5903999999999998);
+	}
+	21% {
+		transform: scale(0.6104991899999999);
+	}
+	22% {
+		transform: scale(0.6298494399999999);
+	}
+	23% {
+		transform: scale(0.64846959);
+	}
+	24% {
+		transform: scale(0.66637824);
+	}
+	25% {
+		transform: scale(0.68359375);
+	}
+	26% {
+		transform: scale(0.70013424);
+	}
+	27% {
+		transform: scale(0.7160175900000001);
+	}
+	28% {
+		transform: scale(0.73126144);
+	}
+	29% {
+		transform: scale(0.74588319);
+	}
+	30% {
+		transform: scale(0.7599);
+	}
+	31% {
+		transform: scale(0.7733287900000001);
+	}
+	32% {
+		transform: scale(0.78618624);
+	}
+	33% {
+		transform: scale(0.7984887900000001);
+	}
+	34% {
+		transform: scale(0.8102526400000001);
+	}
+	35% {
+		transform: scale(0.8214937499999999);
+	}
+	36% {
+		transform: scale(0.83222784);
+	}
+	37% {
+		transform: scale(0.84247039);
+	}
+	38% {
+		transform: scale(0.85223664);
+	}
+	39% {
+		transform: scale(0.8615415900000001);
+	}
+	40% {
+		transform: scale(0.8704000000000001);
+	}
+	41% {
+		transform: scale(0.87882639);
+	}
+	42% {
+		transform: scale(0.8868350399999999);
+	}
+	43% {
+		transform: scale(0.89443999);
+	}
+	44% {
+		transform: scale(0.90165504);
+	}
+	45% {
+		transform: scale(0.90849375);
+	}
+	46% {
+		transform: scale(0.91496944);
+	}
+	47% {
+		transform: scale(0.92109519);
+	}
+	48% {
+		transform: scale(0.92688384);
+	}
+	49% {
+		transform: scale(0.93234799);
+	}
+	50% {
+		transform: scale(0.9375);
+	}
+	51% {
+		transform: scale(0.94235199);
+	}
+	52% {
+		transform: scale(0.94691584);
+	}
+	53% {
+		transform: scale(0.95120319);
+	}
+	54% {
+		transform: scale(0.95522544);
+	}
+	55% {
+		transform: scale(0.95899375);
+	}
+	56% {
+		transform: scale(0.96251904);
+	}
+	57% {
+		transform: scale(0.96581199);
+	}
+	58% {
+		transform: scale(0.96888304);
+	}
+	59% {
+		transform: scale(0.97174239);
+	}
+	60% {
+		transform: scale(0.9743999999999999);
+	}
+	61% {
+		transform: scale(0.97686559);
+	}
+	62% {
+		transform: scale(0.97914864);
+	}
+	63% {
+		transform: scale(0.98125839);
+	}
+	64% {
+		transform: scale(0.98320384);
+	}
+	65% {
+		transform: scale(0.98499375);
+	}
+	66% {
+		transform: scale(0.98663664);
+	}
+	67% {
+		transform: scale(0.98814079);
+	}
+	68% {
+		transform: scale(0.98951424);
+	}
+	69% {
+		transform: scale(0.99076479);
+	}
+	70% {
+		transform: scale(0.9919);
+	}
+	71% {
+		transform: scale(0.99292719);
+	}
+	72% {
+		transform: scale(0.99385344);
+	}
+	73% {
+		transform: scale(0.99468559);
+	}
+	74% {
+		transform: scale(0.99543024);
+	}
+	75% {
+		transform: scale(0.99609375);
+	}
+	76% {
+		transform: scale(0.99668224);
+	}
+	77% {
+		transform: scale(0.99720159);
+	}
+	78% {
+		transform: scale(0.99765744);
+	}
+	79% {
+		transform: scale(0.99805519);
+	}
+	80% {
+		transform: scale(0.9984);
+	}
+	81% {
+		transform: scale(0.99869679);
+	}
+	82% {
+		transform: scale(0.99895024);
+	}
+	83% {
+		transform: scale(0.99916479);
+	}
+	84% {
+		transform: scale(0.99934464);
+	}
+	85% {
+		transform: scale(0.99949375);
+	}
+	86% {
+		transform: scale(0.99961584);
+	}
+	87% {
+		transform: scale(0.99971439);
+	}
+	88% {
+		transform: scale(0.99979264);
+	}
+	89% {
+		transform: scale(0.99985359);
+	}
+	90% {
+		transform: scale(0.9999);
+	}
+	91% {
+		transform: scale(0.99993439);
+	}
+	92% {
+		transform: scale(0.99995904);
+	}
+	93% {
+		transform: scale(0.99997599);
+	}
+	94% {
+		transform: scale(0.99998704);
+	}
+	95% {
+		transform: scale(0.99999375);
+	}
+	96% {
+		transform: scale(0.99999744);
+	}
+	97% {
+		transform: scale(0.99999919);
+	}
+	98% {
+		transform: scale(0.99999984);
+	}
+	99% {
+		transform: scale(0.99999999);
+	}
+	100% {
+		transform: scale(1);
+	}
 }

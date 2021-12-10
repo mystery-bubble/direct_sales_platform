@@ -29,24 +29,29 @@
         <div @click="folding" class="fold-activator">
           <Icon icon="mdi:menu" class="activator-icon" />
         </div>
-          <expand-transition>
-            <div v-show="!foldableAction.isFold">
+        <transition name="expand-y">
+          <span class="fold-list" v-show="!foldableAction.isFold">
+            <transition-group name="expand-y-content">
               <div
+                v-show="!foldableAction.isFold"
                 @click="goto('/cart')"
                 class="action-item"
+                :key="`item-0`"
               >
                 購物車
               </div>
               <div
+                v-show="!foldableAction.isFold"
                 @click="goto( item.route )"
                 class="action-item"
                 v-for="( item, index ) in guideBar.items"
-                :key="`item-${ index }`"
+                :key="`item-${ index + 1 }`"
               >
                 {{ item.title }}
               </div>
-            </div>
-          </expand-transition>
+            </transition-group>
+          </span>
+        </transition>
       </div>
     </div>
     <div
@@ -69,11 +74,8 @@
 </template>
 
 <script>
-import ExpandTransition from "@/components/common/transitions/expand-transition.vue"
-
 export default {
   components: {
-    ExpandTransition
   },
   data: () => ({
     guideBar: {
@@ -124,6 +126,12 @@ export default {
   }),
   methods: {
     initialize() {
+      // set addon animations
+      let frameChild = document.createElement("style")
+      frameChild.classList.add("keyframe")
+      frameChild.textContent = this.calculateFrame()
+      document.head.appendChild(frameChild)
+
       // set default value
       this.verticalMarquee.items.push( this.verticalMarquee.items[ 0 ] )
 
@@ -171,6 +179,26 @@ export default {
     },
     folding() {
       this.foldableAction.isFold = !this.foldableAction.isFold;
+    },
+    calculateFrame() {
+      let expandOuter = ""
+      let expandInner = ""
+      let collapseOuter = ""
+      let collapseInner = ""
+      let ease = ( n ) => {
+        return 1 - Math.pow( 1 - n, 4 )
+      }
+      for ( let step = 0 ; step <= 100 ; ++step ) {
+        let easedStep = ease( step / 100 )
+        expandOuter += `${ step }% {transform:scale(1,${ easedStep });}`
+        expandInner += `${ step }% {transform:scale(1,${ 1 / easedStep });}`
+        collapseOuter += `${ step }% {transform:scale(1,${ 1 - easedStep });}`
+        collapseInner += `${ step }% {transform:scale(1,${ 1 / ( 1 - easedStep ) });}`
+      }
+      return `@keyframes expandOuter {${ expandOuter }}
+      @keyframes expandInner {${ expandInner }}
+      @keyframes collapseOuter {${ collapseOuter }}
+      @keyframes collapseInner {${ collapseInner }}`
     }
   },
   mounted() {
