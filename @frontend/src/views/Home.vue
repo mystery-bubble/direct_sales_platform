@@ -6,24 +6,18 @@
         <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
       </div>
     </div>
-    <div class="horizontal-types">
-      <div class="arrow">
-        <Icon icon="mdi:chevron-left" />
-      </div>
-      <div class="types-container">
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-        <div class="type-item">test</div>
-      </div>
-      <div class="arrow">
-        <Icon icon="mdi:chevron-right" />
+    <div
+      class="horizontal-types"
+    >
+      <div
+        v-for="( type, index ) in types"
+        :key="`product-type-${ index }`"
+        class="type-item"
+        :class="{ 'active': index === typeActive }"
+        :style="`${ index === types.length - 1 ? 'margin-right: 0;' : '' }`"
+        @click.stop="typeClickHandler( index )"
+      >
+        {{ type.name }}
       </div>
     </div>
     <div class="home list-section">
@@ -87,7 +81,39 @@ export default {
         sold: 10000,
         price: 99999
       }
-    )
+    ),
+    types: [
+      {
+        name: "全部商品",
+        mode: "arrange",
+        tag: ""
+      },
+      {
+        name: "最新商品",
+        mode: "arrange",
+        tag: ""
+      },
+      {
+        name: "暢銷商品",
+        mode: "arrange",
+        tag: ""
+      },
+      {
+        name: "暢銷商品",
+        mode: "arrange",
+        tag: ""
+      }
+    ],
+    typeActive: 0,
+    currentPosition: {
+      scroll: {
+        left: undefined,
+      },
+      mouse: {
+        x: undefined,
+      }
+    },
+    isTypesDragging: false
   }),
   methods: {
     changeFocusState() {
@@ -110,6 +136,34 @@ export default {
           return false;
         }
       }
+    },
+    typesMouseDownHandler( e ) {
+      const target = document.querySelector(".horizontal-types")
+      this.currentPosition.scroll.left = target.scrollLeft;
+      this.currentPosition.mouse.x = e.clientX;
+      target.style.cursor = 'grabbing';
+      document.addEventListener('mousemove', this.typesMousemoveHandler);
+      document.addEventListener('mouseup', this.typesMouseUpHandler);
+    },
+    typesMousemoveHandler( e ) {
+      const target = document.querySelector(".horizontal-types")
+      const delta = e.clientX - this.currentPosition.mouse.x;
+      target.scrollLeft = this.currentPosition.scroll.left - delta;
+      this.isTypesDragging = true;
+    },
+    typesMouseUpHandler() {
+      const target = document.querySelector(".horizontal-types")
+      target.style.cursor = 'grab';
+      document.removeEventListener('mousemove', this.typesMousemoveHandler);
+      document.removeEventListener('mouseup', this.typesMouseUpHandler);
+      setTimeout( ()=>{
+        this.isTypesDragging = false
+      } )
+    },
+    typeClickHandler( index ) {
+      if ( !this.isTypesDragging ) {
+        this.typeActive = index
+      }
     }
   },
   mounted() {
@@ -131,6 +185,8 @@ export default {
     }
     this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
     this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+    document.addEventListener('mousedown', this.typesMouseDownHandler);
   },
   watch: {
     floatOpening( newVal ) {

@@ -32,31 +32,34 @@
 }
 
 .horizontal-types {
-  @apply flex flex-row overflow-x-hidden justify-between items-center mb-2 2xl:hidden;
-}
-
-.horizontal-types > .arrow {
-	@apply bg-custom-white p-3 text-2xl;
-
-	border-radius: 8px;
-}
-
-.horizontal-types > .types-container {
-	@apply overflow-hidden bg-custom-white text-center flex-grow py-2 px-2 mx-1.5 whitespace-nowrap;
+	@apply flex flex-row w-full overflow-auto justify-between bg-custom-white text-center flex-grow py-2 px-2 mb-2 select-none;
 	
-	grid-auto-rows: auto;
 	border-radius: 8px;
+	-ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-.horizontal-types > .types-container > .type-item {
-	@apply w-1/2 inline-block mr-2 text-custom-black bg-custom-dark-trn-1 font-bold text-lg py-0.5;
-
-	width: 32.25%;
-	border-radius: 8px;
+.horizontal-types::-webkit-scrollbar {
+  display: none;
 }
 
-.horizontal-types > .types-container > .type-item.active {
-	@apply bg-custom-black text-custom-white
+.horizontal-types > .type-item {
+	@apply mr-2 text-custom-black bg-custom-dark-trn-3 font-bold text-lg py-0.5;
+
+	cursor: pointer;
+	flex: 1 0.04 50%;
+	border-radius: 8px;
+	cursor: 
+}
+
+@screen md {
+	.horizontal-types > .type-item {
+		flex: 1 0.0375 33.3333333%;
+	}
+}
+
+.horizontal-types > .type-item.active {
+	@apply bg-custom-black text-custom-white;
 }
 
 .list.container {
