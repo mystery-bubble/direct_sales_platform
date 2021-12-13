@@ -1,18 +1,12 @@
 <template>
   <div class="view home">
-    <div class="search-box">
-      <div class="inner" :class="{ 'focus': isFocused }">
-        <icon icon="mdi:magnify" class="search-icon" />
-        <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
-      </div>
-    </div>
     <div
       class="horizontal-types"
     >
       <div
         v-for="( type, index ) in types"
         :key="`product-type-${ index }`"
-        class="type-item"
+        class="h-type-item"
         :class="{ 'active': index === typeActive }"
         :style="`${ index === types.length - 1 ? 'margin-right: 0;' : '' }`"
         @click.stop="typeClickHandler( index )"
@@ -21,15 +15,39 @@
       </div>
     </div>
     <div class="home list-section">
+      <div class="vertical-types">
+        <div
+          v-for="( item, index ) in types"
+          :key="`v-product-item-${ index }`"
+          class="v-type-item"
+          :class="{ 'active': index === typeActive }"
+        >
+          <div
+            class="item section active-signs"
+          >
+            <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
+            <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
+          </div>
+          <div class="item section text">{{ item.name }}</div>
+        </div>
+      </div>
       <div class="list container">
-        <x-little-product
-          v-for="( product, index ) in products"
-          :key="`product-${ index }`"
-          :img="product.path"
-          :title="product.title"
-          :sold="product.sold"
-          :price="product.price"
-        />
+        <div class="search-box">
+          <div class="inner" :class="{ 'focus': isFocused }">
+            <icon icon="mdi:magnify" class="search-icon" />
+            <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
+          </div>
+        </div>
+        <div class="list content">
+          <x-little-product
+            v-for="( product, index ) in products"
+            :key="`product-${ index }`"
+            :img="product.path"
+            :title="product.title"
+            :sold="product.sold"
+            :price="product.price"
+          />
+        </div>
       </div>
     </div>
     <transition name="fade">
@@ -137,29 +155,6 @@ export default {
         }
       }
     },
-    typesMouseDownHandler( e ) {
-      const target = document.querySelector(".horizontal-types")
-      this.currentPosition.scroll.left = target.scrollLeft;
-      this.currentPosition.mouse.x = e.clientX;
-      target.style.cursor = 'grabbing';
-      document.addEventListener('mousemove', this.typesMousemoveHandler);
-      document.addEventListener('mouseup', this.typesMouseUpHandler);
-    },
-    typesMousemoveHandler( e ) {
-      const target = document.querySelector(".horizontal-types")
-      const delta = e.clientX - this.currentPosition.mouse.x;
-      target.scrollLeft = this.currentPosition.scroll.left - delta;
-      this.isTypesDragging = true;
-    },
-    typesMouseUpHandler() {
-      const target = document.querySelector(".horizontal-types")
-      target.style.cursor = 'grab';
-      document.removeEventListener('mousemove', this.typesMousemoveHandler);
-      document.removeEventListener('mouseup', this.typesMouseUpHandler);
-      setTimeout( ()=>{
-        this.isTypesDragging = false
-      } )
-    },
     typeClickHandler( index ) {
       if ( !this.isTypesDragging ) {
         this.typeActive = index
@@ -185,8 +180,6 @@ export default {
     }
     this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
     this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-    document.addEventListener('mousedown', this.typesMouseDownHandler);
   },
   watch: {
     floatOpening( newVal ) {
