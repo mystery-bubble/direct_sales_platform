@@ -50,12 +50,16 @@
                 :key="`checkbox-${ index }`"
                 :label="item.title"
                 class="mb-1.5"
+                :isChecked="index === filters.arrangeTarget"
+                name="arrange-choice"
+                @change="changeTarget( $event, index )"
               />
             </div>
             <div class="tool subtitle mt-5">商品篩選</div>
             <div class="tool text mt-1.5">價格範圍</div>
             <div class="mt-2">
-              <input 
+              <input
+                @change="changePriceRange('min', $event.target.value)"
                 type="number"
                 class="tool input"
                 placeholder="最小值"
@@ -63,6 +67,7 @@
               >
               <span> ~ </span>
               <input 
+                @change="changePriceRange('max', $event.target.value)"
                 type="number"
                 class="tool input"
                 placeholder="最大值"
@@ -85,12 +90,52 @@
           </div>
           <div class="list content">
             <x-little-product
-              v-for="( product, index ) in products"
+              v-for="( product, index ) in pagedProducts(page.now)"
               :key="`product-${ index }`"
               :img="product.path"
               :title="product.title"
               :sold="product.sold"
               :price="product.price"
+            />
+          </div>
+        </div>
+        <div class="page-change-block">
+          <div class="change-block sign">
+            <Icon 
+              icon="mdi:chevron-double-left"
+              :class="{ 'invisible': page.now === 0 }"
+              @click="changePage( 0 )"
+            />
+          </div>
+          <div class="change-block-main">
+            <Icon 
+              icon="mdi:chevron-left"
+              class="inline-block text-3xl mr-1"
+              :class="{ 'invisible': page.now === 0 }"
+              @click="changePage( 0 )"
+            />
+            <div
+              v-for="( pagenum, index ) in pageNumbers(page.now)"
+              :key="`numblock-${ index }`"
+              :style="`${ index === totalPages - 1 ? 'margin-right: 0;' : '' }`"
+              class="number-block"
+              :class="{ 'active': index === page.now }"
+              @click="changePage( index )"
+            >
+              {{ pagenum }}
+            </div>
+            <Icon
+              icon="mdi:chevron-right"
+              class="inline-block text-3xl ml-1"
+              :class="{ 'invisible': page.now === totalPages - 1 }"
+              @click="changePage( totalPages - 1 )"
+            />
+          </div>
+          <div class="change-block sign">
+            <Icon 
+              icon="mdi:chevron-double-right"
+              :class="{ 'invisible': page.now === totalPages - 1 }"
+              @click="changePage( totalPages - 1 )"
             />
           </div>
         </div>
@@ -143,7 +188,7 @@ export default {
       wheelEvent: undefined
     },
     isFocused: false,
-    products: Array(30).fill(
+    products: Array(18).fill(
       {
         path: "https://via.placeholder.com/350",
         title: "testsetsetsetsetsetsetsetsetsetsetsetestsetsetsetsetsetsetsetsetsetsetse",
@@ -200,6 +245,10 @@ export default {
       priceRange: {
         mingtrmax: false
       }
+    },
+    page: {
+      now: 0,
+      maxAmount: 12
     }
   }),
   methods: {
@@ -224,10 +273,70 @@ export default {
         }
       }
     },
+    changeTarget( isChecked, index ) {
+      if ( isChecked ) {
+        this.filters.arrangeTarget = index
+      }
+    },
     typeClickHandler( index ) {
       if ( !this.isTypesDragging ) {
         this.typeActive = index
       }
+    },
+    pagedProducts( current ) {
+      if ( this.products.length <= this.page.maxAmount ) {
+        return this.products
+      }
+      else {
+        return this.products.slice( current * this.page.maxAmount , Math.min( ( current + 1 ) * this.page.maxAmount, this.products.length ) )
+      }
+    },
+    pageNumbers( current ) {
+      let returnNumbers = []
+      if ( this.totalPages <= 7 ) {
+        for ( let iter = 0 ; iter <= this.totalPages - 1 ; ++iter ) {
+          returnNumbers.push( iter + 1 )
+        }
+      }
+      else if ( current >= 0 || current <= 3 ) {
+        for ( let iter = 0 ; iter <= 6 ; ++iter ) {
+          returnNumbers.push( iter + 1 )
+        }
+      }
+      else if ( current >= this.totalPages - 4 || current <= this.totalPages - 1 ) {
+        for ( let iter = this.totalPages - 7 ; iter <= this.totalPages - 1 ; ++iter ) {
+          returnNumbers.push( iter + 1 )
+        }
+      }
+      else {
+        for ( let iter = current - 3 ; iter <= current + 3 ; ++iter ) {
+          returnNumbers.push( iter + 1 )
+        }
+      }
+      return returnNumbers
+    },
+    changePriceRange( choice, value ) {
+      if ( choice === "min" ) {
+        if ( value === "" ) {
+          this.filters.priceRange.min = 0  
+        }
+        else {
+          this.filters.priceRange.min = parseInt( value )
+        }
+      }
+      else if ( choice === "max" ) {
+        if ( value === "" ) {
+          this.filters.priceRange.max = Infinity  
+        }
+        else {
+          this.filters.priceRange.max = parseInt( value )
+        }
+      }
+    },
+    changePage( index ) {
+      this.page.now = index
+      window.scrollTo(0,0)
+      // call api
     }
   },
   mounted() {
@@ -249,7 +358,6 @@ export default {
     }
     this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
     this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-    console.log( this.filters.arrange )
   },
   watch: {
     floatOpening( newVal ) {
@@ -265,6 +373,11 @@ export default {
         window.removeEventListener( 'touchmove', this.preventDefault, this.stopScrolling.wheelOpt );
         window.removeEventListener( 'keydown', this.preventDefaultForScrollKeys, false );
       }
+    }
+  },
+  computed: {
+    totalPages() {
+      return Math.floor( this.products.length / this.page.maxAmount ) + 1
     }
   }
 };

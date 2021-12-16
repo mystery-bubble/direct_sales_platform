@@ -60,7 +60,7 @@
 }
 
 .home.section.main > .main.left {
-	@apply w-1/3 hidden xl:flex flex-col justify-between;
+	@apply w-1/3 hidden xl:flex flex-col justify-start;
 }
 
 .home.section.main > .main.left > .vertical-types {
@@ -94,11 +94,11 @@
 }
 
 .home.section.main > .main.left > .filter-tools {
-	@apply border-custom-black w-3/4 ml-6;
+	@apply border-custom-black w-3/4 ml-6 pb-5 mb-5 mt-12;
 
 	border-radius: 8px;
 	border-width: 5px;
-	height: 12.5%;
+	height: min-content;
 }
 
 .filter-tools > .tool.title {
@@ -127,21 +127,45 @@
 }
 
 .filter-tools > .tool.content .tool.input {
-	@apply rounded w-1/4 text-lg px-1.5;
+	@apply rounded w-1/4 text-lg xl:text-base xl:w-1/3 px-1.5;
 }
 
 .filter-tools > .tool.content > .checkbox-group {
-	@apply mt-2
+	@apply mt-2;
 }
 
 .home.section.main > .main.right {
-	@apply w-full xl:w-2/3
+	@apply w-full xl:w-8/12;
 }
 
 .home.section.main > .main.right > .list.container > .list.content {
-  @apply grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 py-5 px-6 bg-custom-white;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 py-5 px-6 bg-custom-white;
 
   border-radius: 12px;
+}
+
+.home.section.main > .main.right > .page-change-block {
+	@apply bg-custom-dark-trn-2 mt-2 flex flex-row justify-between items-center px-2.5 py-2;
+	
+	border-radius: 8px;
+}
+
+.page-change-block > .change-block.sign {
+	@apply text-3xl
+}
+
+.page-change-block > .change-block-main {
+	@apply text-2xl
+}
+
+.page-change-block > .change-block-main > .number-block {
+	@apply inline-block cursor-pointer h-10 w-10 text-center pt-1 mr-1.5 select-none;
+
+	border-radius: 8px;
+}
+
+.page-change-block > .change-block-main > .number-block.active {
+	@apply bg-custom-black-trn-2 text-custom-white
 }
 
 .home.disable-mask {
@@ -176,7 +200,7 @@
 
   border-radius: 8px;
   height: 60vh;
-  width: 50vw;
+  width: 75vw;
 }
 
 .float-expand-enter-active {
