@@ -7,7 +7,7 @@
       </div>
       <div class="action-section">
         <div class="btn-group">
-          <v-icon large size="32">mdi-cart</v-icon>
+          <Icon icon="mdi:cart" class="action cart" />
         </div>
         <div class="guide-bar">
           <div
@@ -27,26 +27,31 @@
       </div>
       <div class="foldable-action-section">
         <div @click="folding" class="fold-activator">
-          <v-icon class="activator-icon">mdi-menu</v-icon>
+          <Icon icon="mdi:menu" class="activator-icon" />
         </div>
-        <v-expand-transition>
-          <div v-show="!foldableAction.isFold">
-            <div
-              @click="goto('/cart')"
-              class="action-item"
-            >
-              購物車
-            </div>
-            <div
-              @click="goto( item.route )"
-              class="action-item"
-              v-for="( item, index ) in guideBar.items"
-              :key="`item-${ index }`"
-            >
-              {{ item.title }}
-            </div>
-          </div>
-        </v-expand-transition>
+        <transition name="expand-y">
+          <span class="fold-list" v-show="!foldableAction.isFold">
+            <transition-group name="expand-y-content">
+              <div
+                v-show="!foldableAction.isFold"
+                @click="goto('/cart')"
+                class="action-item"
+                :key="`item-0`"
+              >
+                購物車
+              </div>
+              <div
+                v-show="!foldableAction.isFold"
+                @click="goto( item.route )"
+                class="action-item"
+                v-for="( item, index ) in guideBar.items"
+                :key="`item-${ index + 1 }`"
+              >
+                {{ item.title }}
+              </div>
+            </transition-group>
+          </span>
+        </transition>
       </div>
     </div>
     <div
@@ -70,6 +75,8 @@
 
 <script>
 export default {
+  components: {
+  },
   data: () => ({
     guideBar: {
       activated: 0,
@@ -119,6 +126,12 @@ export default {
   }),
   methods: {
     initialize() {
+      // set addon animations
+      let frameChild = document.createElement("style")
+      frameChild.classList.add("keyframe")
+      frameChild.textContent = this.calculateFrame()
+      document.head.appendChild(frameChild)
+
       // set default value
       this.verticalMarquee.items.push( this.verticalMarquee.items[ 0 ] )
 
@@ -166,6 +179,26 @@ export default {
     },
     folding() {
       this.foldableAction.isFold = !this.foldableAction.isFold;
+    },
+    calculateFrame() {
+      let expandOuter = ""
+      let expandInner = ""
+      let collapseOuter = ""
+      let collapseInner = ""
+      let ease = ( n ) => {
+        return 1 - Math.pow( 1 - n, 4 )
+      }
+      for ( let step = 0 ; step <= 100 ; ++step ) {
+        let easedStep = ease( step / 100 )
+        expandOuter += `${ step }% {transform:scale(1,${ easedStep });}`
+        expandInner += `${ step }% {transform:scale(1,${ 1 / easedStep });}`
+        collapseOuter += `${ step }% {transform:scale(1,${ 1 - easedStep });}`
+        collapseInner += `${ step }% {transform:scale(1,${ 1 / ( 1 - easedStep ) });}`
+      }
+      return `@keyframes expandOuter {${ expandOuter }}
+      @keyframes expandInner {${ expandInner }}
+      @keyframes collapseOuter {${ collapseOuter }}
+      @keyframes collapseInner {${ collapseInner }}`
     }
   },
   mounted() {
@@ -187,6 +220,6 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style scoped lang="postcss">
 @import "../../../styles/components/unique/_root/x-header.pcss";
 </style>

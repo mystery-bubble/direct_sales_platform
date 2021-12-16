@@ -82,6 +82,6 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style scoped lang="postcss">
 @import "../styles/views/Product.pcss";
 </style>  

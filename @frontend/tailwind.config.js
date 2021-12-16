@@ -47,7 +47,8 @@ module.exports = {
             "trn-2": "rgba(243, 244, 245, .5)",
             "trn-3": "rgba(243, 244, 245, .3)"  
           },
-          superbright: "rgba(254, 254, 254, 1)"
+          superbright: "rgba(254, 254, 254, 1)",
+          danger: "rgba(199, 84, 82, 1)"
         }
       }
     },

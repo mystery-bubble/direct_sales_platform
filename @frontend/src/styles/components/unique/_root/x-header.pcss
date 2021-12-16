@@ -27,22 +27,29 @@
 .main-part > .foldable-action-section {
   @apply flex flex-col xl:hidden mt-3 overflow-hidden;
 
-  background-color: rgba(174, 155, 113, .3);
   border-radius: 12px;
 }
 
 .foldable-action-section > .fold-activator {
-  @apply table text-center h-9 cursor-pointer;
+  @apply flex justify-center items-center h-9 cursor-pointer;
 
   background-color: rgba(174, 155, 113, .8);
 }
 
 .foldable-action-section > .fold-activator > .activator-icon {
-  @apply table-cell align-middle;
+  @apply text-2xl text-custom-black
+}
+
+.foldable-action-section > .fold-list {
+  @apply bg-custom-dark-trn-3 overflow-hidden;
+
+  will-change: trnasform;
 }
 
 .action-item {
-  @apply text-xl flex justify-center items-center h-14 font-extrabold cursor-pointer;
+  @apply select-none text-xl flex justify-center items-center h-14 font-extrabold cursor-pointer;
+
+  will-change: trnasform;
 }
 
 .action-item:hover {
@@ -62,7 +69,7 @@
 }
 
 .sub-part > .vertical-marquee-item {
-  @apply block mb-2;
+  @apply block mb-2 select-none;
 }
 
 .logo-img {
@@ -79,6 +86,10 @@
 
 .btn-group {
   @apply flex
+}
+
+.btn-group > .action.cart {
+  @apply text-4xl text-custom-black
 }
 
 .guide-bar {
@@ -109,4 +120,32 @@
 
 .active {
   color: rgba(243, 244, 245, 1) !important;
+}
+
+.expand-y-enter-active {
+  transform-origin: top;
+  animation-name: expandOuter;
+  animation-duration: .4s;
+  animation-timing-function: linear;
+}
+
+.expand-y-leave-active {
+  transform-origin: top;
+  animation-name: collapseOuter;
+  animation-duration: .4s;
+  animation-timing-function: linear;
+}
+
+.expand-y-content-enter-active {
+	transform-origin: top;
+  animation-name: expandInner;
+  animation-duration: .4s;
+  animation-timing-function: linear;
+}
+
+.expand-y-content-leave-active {
+	transform-origin: top;
+  animation-name: collapseInner;
+  animation-duration: .4s;
+  animation-timing-function: linear;
 }

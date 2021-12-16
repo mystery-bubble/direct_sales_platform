@@ -1,0 +1,29 @@
+.radio-switch-container {
+  @apply flex flex-row items-center
+}
+
+.outer {
+  @apply bg-custom-white flex flex-row justify-center items-center rounded-full;
+
+  padding: 1.5px;
+}
+
+.outer > .inner {
+  @apply inline-block bg-custom-black rounded-full align-middle transition-transform;
+}
+
+.outer > .inner.left {
+  transform: translateX(-55%);
+}
+
+.outer > .inner.right {
+  transform: translateX(55%);
+}
+
+.radio-switch-container > .text-left {
+  @apply mr-1.5
+}
+
+.radio-switch-container > .text-right {
+  @apply ml-1.5
+}

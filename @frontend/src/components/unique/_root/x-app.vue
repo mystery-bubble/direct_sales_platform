@@ -1,15 +1,13 @@
 <template>
-  <v-app>
-    <v-sheet class="x-app" :color="bgColor">
-      <x-container :bg-color="innerColor">
-        <x-header />
-        <v-main>
-          <slot></slot>
-        </v-main>
-        <x-footer />
-      </x-container>
-    </v-sheet>
-  </v-app>
+  <div class="x-app" :style="`background-color: ${ bgColor }`">
+    <x-container :bg-color="innerColor">
+      <x-header />
+      <div class="x-main">
+        <slot></slot>
+      </div>
+      <x-footer />
+    </x-container>
+  </div>
 </template>
 
 <script>
@@ -38,6 +36,6 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style scoped lang="postcss">
 @import "../../../styles/components/unique/_root/x-app.pcss";
 </style>

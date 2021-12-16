@@ -1,0 +1,21 @@
+.custom-checkbox-container {
+  @apply flex flex-row items-center
+}
+
+.custom-checkbox-container > .main {
+  @apply bg-custom-white text-custom-black flex justify-center items-center;
+
+  border-radius: 50%;
+}
+
+.custom-checkbox-container.dark > .main {
+  @apply bg-custom-black text-custom-black
+}
+
+.custom-checkbox-container > .text {
+  @apply inline-block ml-2.5 text-custom-black select-none font-semibold;
+}
+
+.custom-checkbox-container.dark > .text {
+  @apply inline-block text-custom-black select-none;
+}

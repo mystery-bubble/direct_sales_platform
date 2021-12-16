@@ -1,7 +1,7 @@
 <template>
-  <v-sheet class="x-container" :color="bgColor">
+  <div class="x-container" :style="`background-color: ${ bgColor }`">
     <slot></slot>
-  </v-sheet>
+  </div>
 </template>
 
 <script>
