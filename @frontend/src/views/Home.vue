@@ -14,39 +14,85 @@
         {{ type.name }}
       </div>
     </div>
-    <div class="home list-section">
-      <div class="vertical-types">
-        <div
-          v-for="( item, index ) in types"
-          :key="`v-product-item-${ index }`"
-          class="v-type-item"
-          :class="{ 'active': index === typeActive }"
-        >
+    <div class="home section main">
+      <div class="main left">
+        <div class="vertical-types">
           <div
-            class="item section active-signs"
+            v-for="( item, index ) in types"
+            :key="`v-product-item-${ index }`"
+            class="v-type-item"
+            :class="{ 'active': index === typeActive }"
           >
-            <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
-            <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
+            <div class="item section active-signs">
+              <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
+              <div class="sign" :class="{ 'disabled': index !== typeActive }"></div>
+            </div>
+            <div class="item section text">{{ item.name }}</div>
           </div>
-          <div class="item section text">{{ item.name }}</div>
+        </div>
+        <div class="filter-tools">
+          <div class="tool title">
+            <span class="title text">篩選工具</span>
+          </div>
+          <div class="tool content">
+            <div class="tool subtitle">
+              <div>商品排序</div>
+              <radio-switch
+                :state="productsOrder"
+                size="md"
+                text:left="降序"
+                text:right="升序"
+              />
+            </div>
+            <div class="checkbox-group">
+              <custom-checkbox 
+                v-for="( item, index ) in filters.arrange"
+                :key="`checkbox-${ index }`"
+                :label="item.title"
+                class="mb-1.5"
+              />
+            </div>
+            <div class="tool subtitle mt-5">商品篩選</div>
+            <div class="tool text mt-1.5">價格範圍</div>
+            <div class="mt-2">
+              <input 
+                type="number"
+                class="tool input"
+                placeholder="最小值"
+                step="100"
+              >
+              <span> ~ </span>
+              <input 
+                type="number"
+                class="tool input"
+                placeholder="最大值"
+                step="100"
+              >
+            </div>
+            <div class="tool text error mt-1.5" v-show="errorOccured.priceRange.mingtrmax">
+              最大值的數字必須大於最小值的數字。
+            </div>
+          </div>
         </div>
       </div>
-      <div class="list container">
-        <div class="search-box">
-          <div class="inner" :class="{ 'focus': isFocused }">
-            <icon icon="mdi:magnify" class="search-icon" />
-            <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
+      <div class="main right">
+        <div class="list container">
+          <div class="search-box">
+            <div class="inner" :class="{ 'focus': isFocused }">
+              <icon icon="mdi:magnify" class="search-icon" />
+              <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
+            </div>
           </div>
-        </div>
-        <div class="list content">
-          <x-little-product
-            v-for="( product, index ) in products"
-            :key="`product-${ index }`"
-            :img="product.path"
-            :title="product.title"
-            :sold="product.sold"
-            :price="product.price"
-          />
+          <div class="list content">
+            <x-little-product
+              v-for="( product, index ) in products"
+              :key="`product-${ index }`"
+              :img="product.path"
+              :title="product.title"
+              :sold="product.sold"
+              :price="product.price"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -78,13 +124,18 @@
 <script>
 // Stop scrolling solution from https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
 import XLittleProduct from "@/components/unique/Home/x-little-product.vue";
+import RadioSwitch from "@/components/common/simple/radio-switch.vue"
+import CustomCheckbox from "@/components/common/simple/custom-checkbox.vue"
 
 export default {
   name: "Home",
   components: {
-    XLittleProduct
+    XLittleProduct,
+    RadioSwitch,
+    CustomCheckbox
   },
   data: () => ({
+    productsOrder: false,
     floatOpening: false,
     floatContentVisibilty: false,
     stopScrolling: {
@@ -103,23 +154,15 @@ export default {
     types: [
       {
         name: "全部商品",
-        mode: "arrange",
-        tag: ""
       },
       {
         name: "最新商品",
-        mode: "arrange",
-        tag: ""
       },
       {
         name: "暢銷商品",
-        mode: "arrange",
-        tag: ""
       },
       {
         name: "暢銷商品",
-        mode: "arrange",
-        tag: ""
       }
     ],
     typeActive: 0,
@@ -131,7 +174,33 @@ export default {
         x: undefined,
       }
     },
-    isTypesDragging: false
+    isTypesDragging: false,
+    filters: {
+      arrange: [
+        {
+          title: "依照默認排序",
+          methodsParam: "arrange:default"
+        },
+        {
+          title: "依照上架時間",
+          methodsParam: "arrange:default"
+        },
+        {
+          title: "依照金額大小",
+          methodsParam: "arrange:default"
+        }
+      ],
+      arrangeTarget: 0,
+      priceRange: {
+        min: 0,
+        max: Infinity
+      } 
+    },
+    errorOccured: {
+      priceRange: {
+        mingtrmax: false
+      }
+    }
   }),
   methods: {
     changeFocusState() {
@@ -180,6 +249,7 @@ export default {
     }
     this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
     this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+    console.log( this.filters.arrange )
   },
   watch: {
     floatOpening( newVal ) {
