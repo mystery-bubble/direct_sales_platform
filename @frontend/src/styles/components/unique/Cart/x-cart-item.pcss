@@ -1,0 +1,84 @@
+.cart-item-container {
+  @apply flex flex-row relative p-3.5 items-center bg-custom-superbright border border-custom-black;
+
+  border-radius: 8px;
+}
+
+.cart-item-container.selected {
+  @apply bg-custom-dark-trn-2;
+}
+
+.cart-item-container > .c-item.action,
+.cart-item-container > .c-item.shrink-content {
+  @apply xl:hidden
+}
+
+.cart-item-container > .c-item.title,
+.cart-item-container > .c-item.specs,
+.cart-item-container > .c-item.price,
+.cart-item-container > .c-item.subtotal {
+  @apply hidden xl:block
+}
+
+
+.cart-item-container > .c-item.amount {
+  @apply hidden xl:flex
+}
+
+.c-item.action,
+.c-item.specs {
+  @apply w-1/12
+}
+
+
+.c-item.picture {
+  @apply w-1/4 xl:w-1/12
+}
+
+.c-item.title {
+  @apply w-1/3 break-all pl-3 pr-7
+}
+
+.c-item.price,
+.c-item.amount,
+.c-item.subtotal {
+  @apply w-1/6
+}
+
+.c-item.check-sign {
+  @apply absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-custom-black
+}
+
+.c-item.picture > .item-picture {
+  @apply w-full
+}
+
+.c-item.specs > select {
+  @apply text-sm;
+  max-width: 85%
+}
+
+.c-item.price {
+  @apply text-sm
+}
+
+.c-item.amount {
+  @apply flex-row
+}
+
+.c-item.amount > .sign {
+  @apply border bg-custom-dark w-6 h-6 text-center border-custom-black text-custom-superbright;
+
+  padding-left: 3px;
+  padding-top: 3px;
+}
+
+.c-item.amount > .number {
+  @apply px-5 h-6 font-semibold text-xs border-t border-b border-custom-black;
+
+  padding-top: 3px;
+}
+
+.c-item.subtotal {
+  @apply text-sm;
+}
