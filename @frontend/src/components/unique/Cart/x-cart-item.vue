@@ -11,13 +11,33 @@
       <img class="item-picture" :src="info.imgsrc">
     </div>
     <div class="c-item shrink-content">
-      test
+      <div class="title">{{ this.shrinkTitle }}</div>
+      <div class="types">
+        <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="selectMask">
+          <option disabled selected hidden>選擇規格</option>
+          <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+      <div class="price">
+        $ {{ info.price }}
+      </div>
+      <div class="amount">
+        <div class="sign" @click.stop="--info.amount">
+          <Icon icon="mdi:minus" />
+        </div>
+        <div class="number">
+          <input v-model="info.amount" class="number-input" type="text" @click.stop="clickMask">
+        </div>
+        <div class="sign" @click.stop="++info.amount">
+          <Icon icon="mdi:plus" />
+        </div>
+      </div>
     </div>
     <div class="c-item title">
       {{ info.title }}
     </div>
     <div class="c-item types">
-      <select name="specs" class="border border-custom-black" @change="optionChangeHandler( $event.target.value )" @click.stop="selectMask">
+      <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="clickMask">
         <option disabled selected hidden>選擇規格</option>
         <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id">{{ type.name }}</option>
       </select>
@@ -27,7 +47,11 @@
       <div class="sign" @click.stop="--info.amount">
         <Icon icon="mdi:minus" />
       </div>
-      <div class="number">{{ info.amount }}</div>
+      <div class="number">
+        <span>
+          <input v-model="info.amount" class="number-input" type="text" @click.stop="clickMask">
+        </span>
+      </div>
       <div class="sign" @click.stop="++info.amount">
         <Icon icon="mdi:plus" />
       </div>
@@ -56,6 +80,12 @@
 
 <script>
 export default {
+  props: {
+    checked: {
+      type: Boolean,
+      default: false
+    }
+  },
   data: () => ({
     info: {
       title: "這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品",
@@ -78,14 +108,14 @@ export default {
       amount: 1000
     },
     isChecked: false,
-    selectedOption: -1
+    selectedOption: -1,
+    amountInputMode: false
   }),
   methods: {
     changeHandler( state ) {
       this.isChecked = state
-      this.$emit( "change", state )
     },
-    selectMask() {
+    clickMask() {
       return true
     },
     optionChangeHandler( id ) {
@@ -100,6 +130,30 @@ export default {
   computed: {
     subtotal() {
       return this.info.amount * this.info.price
+    },
+    shrinkTitle() {
+      if ( this.info.title.length > 30 ) {
+        return this.info.title.slice(0,31) + " ..."
+      }
+      else {
+        return this.info.title
+      }
+    },
+    amount() {
+      return this.info.amount
+    }
+  },
+  watch: {
+    checked( newVal ) {
+      this.isChecked = newVal
+    },
+    isChecked( newVal ) {
+      this.$emit( "change", newVal )
+    },
+    amount( newVal, oldVal ) {
+      if ( isNaN( newVal ) ) {
+        this.info.amount = parseInt( oldVal )
+      }
     }
   }
 }
