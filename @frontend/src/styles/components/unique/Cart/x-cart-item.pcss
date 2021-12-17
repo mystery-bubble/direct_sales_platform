@@ -14,9 +14,10 @@
 }
 
 .cart-item-container > .c-item.title,
-.cart-item-container > .c-item.specs,
+.cart-item-container > .c-item.types,
 .cart-item-container > .c-item.price,
-.cart-item-container > .c-item.subtotal {
+.cart-item-container > .c-item.subtotal,
+.cart-item-container > .c-item.check-sign {
   @apply hidden xl:block
 }
 
@@ -26,17 +27,17 @@
 }
 
 .c-item.action,
-.c-item.specs {
+.c-item.types {
   @apply w-1/12
 }
 
 
 .c-item.picture {
-  @apply w-1/4 xl:w-1/12
+  @apply w-1/4 xl:w-1/12 select-none
 }
 
 .c-item.title {
-  @apply w-1/3 break-all pl-3 pr-7
+  @apply w-1/3 break-all pl-3 pr-7 select-none
 }
 
 .c-item.price,
@@ -53,13 +54,13 @@
   @apply w-full
 }
 
-.c-item.specs > select {
-  @apply text-sm;
+.c-item.types > select {
+  @apply text-sm select-none;
   max-width: 85%
 }
 
 .c-item.price {
-  @apply text-sm
+  @apply text-sm select-none
 }
 
 .c-item.amount {
@@ -74,11 +75,11 @@
 }
 
 .c-item.amount > .number {
-  @apply px-5 h-6 font-semibold text-xs border-t border-b border-custom-black;
+  @apply px-5 h-6 font-semibold text-xs border-t border-b border-custom-black bg-custom-superbright select-none;
 
   padding-top: 3px;
 }
 
 .c-item.subtotal {
-  @apply text-sm;
+  @apply text-sm select-none;
 }
