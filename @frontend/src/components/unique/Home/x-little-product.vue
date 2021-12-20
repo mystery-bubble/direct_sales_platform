@@ -4,7 +4,7 @@
       <img :src="img" />
     </div>
     <div class="little-product-title">
-      {{ title }}
+      {{ shrinkTitle }}
     </div>
     <div class="little-product-numbers">
       <div class="number sold">已售出 {{ shortsold }}</div>
@@ -36,6 +36,12 @@ export default {
   computed: {
     shortsold() {
       return this.sold > this.over ? `${ this.over }+` : this.info.sold
+    },
+    shrinkTitle() {
+      if ( this.title.length > 25 ) {
+        return this.title.slice( 0, 26 ) + "..."
+      }
+      return this.title
     }
   }
 }

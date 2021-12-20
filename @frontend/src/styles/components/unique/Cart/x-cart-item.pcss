@@ -50,6 +50,10 @@
   @apply absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-custom-black
 }
 
+.c-item.action {
+  @apply self-center;
+}
+
 .c-item.picture > .item-picture {
   @apply w-full
 }
@@ -92,14 +96,14 @@
 }
 
 .c-item.amount > .sign, .c-item.shrink-content > .amount > .sign {
-  @apply border bg-custom-dark w-6 h-6 text-center border-custom-black text-custom-superbright;
+  @apply border bg-custom-dark w-6 h-6 text-center border-custom-black-trn-2 text-custom-superbright;
 
   padding-left: 3px;
   padding-top: 3px;
 }
 
 .c-item.amount > .number, .c-item.shrink-content > .amount > .number {
-  @apply h-6 text-sm border-t border-b border-custom-black bg-custom-superbright select-none;
+  @apply h-6 text-sm border-t border-b border-custom-black-trn-2 bg-custom-superbright select-none;
 
   padding-top: 1px;
   width: 30%;

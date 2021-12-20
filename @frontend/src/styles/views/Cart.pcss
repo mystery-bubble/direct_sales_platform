@@ -1,8 +1,72 @@
-.view.cart {
-}
-
 .view.cart > .cart.main-part {
   @apply flex flex-col xl:mx-1
+}
+
+.view.cart > .cart.action-part {
+  @apply flex flex-col xl:flex-row xl:mx-1 mt-2;
+}
+
+
+.view.cart > .cart.action-part > .result-section {
+  @apply bg-custom-white flex flex-col items-end;
+
+  border-radius: 8px;
+}
+
+.number-total, .number-discount {
+  @apply py-6 px-2 flex flex-row items-center;
+}
+
+.result-section > .action-dispatch {
+  @apply self-stretch flex flex-row justify-between items-center
+}
+
+.number-total > .total-sign {
+  @apply py-1 px-3 font-semibold mr-12 text-sm bg-custom-black text-custom-white;
+
+  border-radius: 8px;
+}
+
+.number-total > .total-text, .number-discount > .discount-text {
+  @apply text-2xl mr-4 font-bold text-custom-black
+}
+
+.number-discount > .discount-sign {
+  @apply py-1 px-3 font-semibold mr-12 text-sm bg-custom-light text-custom-black;
+
+  border-radius: 8px;
+}
+
+.result-section hr {
+  @apply self-stretch
+}
+
+.action-dispatch {
+  @apply my-3 ml-8 mr-3
+}
+
+.action-dispatch .total-counter {
+  @apply font-semibold text-xl 
+}
+
+.action-dispatch .real-total-sign {
+ @apply py-1 px-3 font-semibold mr-12 text-sm bg-custom-black text-custom-white;
+
+ border-radius: 8px;
+}
+
+.action-dispatch .real-total-text {
+  @apply text-2xl mr-8 font-bold text-custom-black;
+}
+
+.action-dispatch .dispatch-button {
+  @apply px-32 py-8 bg-custom-dark text-2xl font-bold flex flex-row items-center text-custom-white select-none transition-colors cursor-pointer;
+
+  border-radius: 8px;
+}
+
+.action-dispatch .dispatch-button:hover {
+  @apply bg-custom-dark-trn-1;
 }
 
 .cart.main-part > .main.head {
@@ -16,3 +80,4 @@
 
   border-radius: 8px;
 }
+

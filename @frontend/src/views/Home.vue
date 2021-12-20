@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="main right">
-        <div class="list container">
+        <div class="list-container">
           <div class="search-box">
             <div class="inner" :class="{ 'focus': isFocused }">
               <icon icon="mdi:magnify" class="search-icon" />
@@ -90,7 +90,7 @@
           </div>
           <div class="list content">
             <x-little-product
-              v-for="( product, index ) in pagedProducts(page.now)"
+              v-for="( product, index ) in pagedProducts( page.now )"
               :key="`product-${ index }`"
               :img="product.path"
               :title="product.title"
@@ -190,8 +190,8 @@ export default {
     isFocused: false,
     products: Array(18).fill(
       {
-        path: "https://via.placeholder.com/350",
-        title: "testsetsetsetsetsetsetsetsetsetsetsetestsetsetsetsetsetsetsetsetsetsetse",
+        path: "https://via.placeholder.com/750",
+        title: "這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品",
         sold: 10000,
         price: 99999
       }

@@ -13,7 +13,7 @@
     <div class="c-item shrink-content">
       <div class="title">{{ this.shrinkTitle }}</div>
       <div class="types">
-        <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="selectMask">
+        <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="clickMask">
           <option disabled selected hidden>選擇規格</option>
           <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id">{{ type.name }}</option>
         </select>
