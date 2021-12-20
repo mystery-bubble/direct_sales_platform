@@ -4,6 +4,7 @@ const cors = require( "cors" )
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
 // const logger = require( "./utilities/logger" );
+const loggerMiddleware = require("./middlewares/morganLogger")
 
 const app = express();
 const port = process.env.PORT || config.port;
@@ -11,12 +12,15 @@ const ENV = process.env.NODE_ENV || config.env;
 
 app.set( "env", ENV );
 
+app.use( loggerMiddleware );
 app.use( express.json() );
 app.use( cors() )
 app.use( customResponses );
 
 require( "./config/mongoose" )( app );
 require( "./app" )( app );
+
+
 
 app.use( ( req, res ) => {
     res.notFound();
