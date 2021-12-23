@@ -3,7 +3,7 @@ const cors = require( "cors" )
 
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
-// const logger = require( "./utilities/logger" );
+const logger = require( "./utilities/logger" );
 const loggerMiddleware = require("./middlewares/morganLogger")
 
 const app = express();
@@ -14,20 +14,18 @@ app.set( "env", ENV );
 
 app.use( loggerMiddleware );
 app.use( express.json() );
-app.use( cors() )
+app.use( cors( config.corsSettings ) )
 app.use( customResponses );
 
 require( "./config/mongoose" )( app );
 require( "./app" )( app );
-
-
 
 app.use( ( req, res ) => {
     res.notFound();
 } );
 
 app.use( ( err, req, res, next ) => {
-    // logger.error( err.stack );
+    logger.error( err.stack );
     next( err );
 } );
 
@@ -40,6 +38,5 @@ app.use( ( err, req, res, next ) => { // eslint-disable-line no-unused-vars
 } );
 
 app.listen( port, () => {
-    // logger.info( `Listening on port ${ port }` );
-    console.log( `Listening on port ${ port }` );
+    logger.info( `Listening on port ${ port }` );
 } );
