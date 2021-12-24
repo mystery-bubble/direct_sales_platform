@@ -1,10 +1,13 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
+const NAME = "EmployeeRewards"
+
 const employeeRewardsSchema = new Schema({
   employee_id: {
     type: mongoose.ObjectId,
-    required: true
+    required: true,
+    ref: "Employee"
   },
   balance: {
     type: Number,
@@ -26,3 +29,5 @@ const employeeRewardsSchema = new Schema({
     default: 0
   }
 })
+
+module.exports = mongoose.model( NAME, employeeRewardsSchema )

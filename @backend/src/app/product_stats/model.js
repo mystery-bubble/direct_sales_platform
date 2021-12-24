@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-
 const Schema = mongoose.Schema
+
+const NAME = "ProductStats"
 
 const productStatsSchema = new Schema({
   action: {
@@ -19,3 +20,5 @@ const productStatsSchema = new Schema({
 },{
   timestamps: true
 })
+
+module.exports = mongoose.model( NAME, productStatsSchema )

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-
 const Schema = mongoose.Schema
+
+const NAME = "ProductType"
 
 const productTypeSchema = new Schema({
   id: {
@@ -30,3 +31,5 @@ const productTypeSchema = new Schema({
     required: true
   }
 })
+
+module.exports = mongoose.model( NAME, productTypeSchema )
