@@ -2,6 +2,8 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const Schema = mongoose.Schema
 
+const NAME = "Employee"
+
 const employeeSchema = new Schema({
   id: {
     type: String,
@@ -36,3 +38,5 @@ const employeeSchema = new Schema({
     default: -1
   }
 })
+
+module.exports = mongoose.model( NAME, employeeSchema )

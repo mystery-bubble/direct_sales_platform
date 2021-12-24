@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema  
 
+const NAME = "ProductBonus"
+
 const productBonusSchema = new Schema({
   product_id: {
     type: mongoose.ObjectId,
@@ -34,3 +36,5 @@ const productBonusSchema = new Schema({
 var lengthRestrict = val => {
   return val.length === 7
 }
+
+module.exports = mongoose.model( NAME, productBonusSchema )
