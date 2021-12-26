@@ -11,13 +11,12 @@ const productBonusSchema = new Schema({
   },
   limit: {
     type: Number,
-    required: true
+    default: () => this.for_saler[ this.for_saler.legnth - 1 ] + this.for_recruiter
   },
   for_recruiter: {
-    type: [Number],
+    type: Number,
     required: true,
-    default: [ 0, 0, 0, 0, 0, 0, 0 ],
-    validate: [ lengthRestrict, `{ PATH }'s length didn't match the proper number( Should be: ${ rewardLength } ).` ]
+    default: 0
   },
   for_leader: {
     type: [Number],
