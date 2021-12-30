@@ -3,7 +3,6 @@ const mongoose = require( "mongoose" );
 
 module.exports = app => {
     mongoose.connect( config.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true } );
-    mongoose.set("useCreateIndex", true)
     mongoose.Promise = global.Promise;
 
     process.on( "SIGINT", cleanup );

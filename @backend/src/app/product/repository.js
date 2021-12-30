@@ -5,7 +5,7 @@ const Product = mongoose.model("Product")
 
 const saveProduct = async data => {
   const product = new Product( data )
-  return product.save()
+  return await product.save()
 }
 
 const updateProduct = async ( product, data ) => {
@@ -14,17 +14,29 @@ const updateProduct = async ( product, data ) => {
 
   _.assign( current, {
     "name": name || current.name,
-    "description": description || current.description
+    "description": description || current.description,
   } )
 
-  return product.save()
+  return await product.save()
 }
 
 const removeProduct = async product => await product.remove()
 
-const findProductById = async id => await Product.findById( id )
+const findProductByObjectId = async id => await Product.findById( id )
 
-const findProductbyName = async name => await Product.findOne( { name } )
+const findProductById = async id => await Product.findOne( { id } )
+
+const findProductbyName = async name => {
+  return await Product.find(
+    {
+      name: { 
+        $text: {
+          $search: name
+        }
+      }
+    }
+  )
+}
 
 const findAllProduct = async () => await Product.find()
 
@@ -32,6 +44,7 @@ module.exports = {
   saveProduct,
   updateProduct,
   removeProduct,
+  findProductByObjectId,
   findProductById,
   findProductbyName,
   findAllProduct

@@ -3,7 +3,8 @@ const _ = require("lodash")
 
 const ProductBonus = mongoose.model("ProductBonus")
 
-const saveProductBonus = async data => {
+const saveProductBonus = async ( product_id, data ) => {
+  data.product_id = product_id
   const bonus = new ProductBonus( data )
   return bonus.save()
 }
@@ -25,11 +26,14 @@ const updateProductBonus = async ( bonus, data ) => {
 
 const removeProductBonus = async bonus => await bonus.remove()
 
-const findBonusById = async id => await ProductBonus.findById( id )
+const findBonusByObjectId = async id => await ProductBonus.findById( id )
+
+const findBonusByProduct = async product_id => await ProductBonus.findOne( { product_id } )
 
 module.exports = {
   saveProductBonus,
   updateProductBonus,
   removeProductBonus,
-  findBonusById
+  findBonusByObjectId,
+  findBonusByProduct
 }

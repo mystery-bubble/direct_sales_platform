@@ -15,14 +15,13 @@ const productSchema = new Schema({
   },
   description: {
     type: String
-  },
-  bonus_id: {
-    type: mongoose.ObjectId,
-    required: true,
-    ref: "ProductBonus"
   }
 }, {
   timestamps: true
+})
+
+productSchema.index({ 
+  "name": "text"
 })
 
 module.exports = mongoose.model( NAME, productSchema )
