@@ -48,3 +48,72 @@
 2021-12-31 04:05:04:54 [90minfo[39m: [90mRequset Type: Product[39m
 2021-12-31 04:05:18:518 [90minfo[39m: [90mListening on port 1234[39m
 2021-12-31 04:05:20:520 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:06:17:617 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:06:19:619 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:11:48:1148 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:12:22:1222 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
+[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
+[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
+[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
+[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
+[31m    at IncomingMessage.emit (events.js:327:22)[39m
+[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
+[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m
+2021-12-31 04:13:27:1327 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
+[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
+[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
+[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
+[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
+[31m    at IncomingMessage.emit (events.js:327:22)[39m
+[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
+[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m
+2021-12-31 04:13:38:1338 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:26:56:2656 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:27:01:271 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:27:36:2736 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:27:39:2739 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:28:49:2849 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:28:53:2853 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:31:44:3144 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:31:47:3147 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 04:34:41:3441 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 04:34:43:3443 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 09:40:16:4016 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:18:54:1854 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:20:51:2051 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:21:05:215 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:21:41:2141 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:21:41:2141 [90minfo[39m: [90mMethod: create[39m
+2021-12-31 11:22:05:225 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:22:44:2244 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:22:48:2248 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:26:06:266 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:26:08:268 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:27:22:2722 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:27:23:2723 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:27:59:2759 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:28:00:280 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:28:37:2837 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:28:40:2840 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:30:01:301 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:30:02:302 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:30:49:3049 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:30:51:3051 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:31:22:3122 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:31:23:3123 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:31:50:3150 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:31:52:3152 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:34:49:3449 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:34:50:3450 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:35:37:3537 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:35:39:3539 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:36:05:365 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:36:06:366 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:36:27:3627 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:36:30:3630 [90minfo[39m: [90mRequset Type: Product[39m
+2021-12-31 11:39:11:3911 [90minfo[39m: [90mListening on port 1234[39m
+2021-12-31 11:39:14:3914 [90minfo[39m: [90mRequset Type: Product[39m

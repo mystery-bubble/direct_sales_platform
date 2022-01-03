@@ -10,15 +10,28 @@ const transactionSchema = new Schema({
   },
   employee_id: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   status: {
     type: String,
     required: true
   },
   customer_id: {
-    type: mongoose.ObjectId
+    type: mongoose.ObjectId,
+    index: true,
+    ref: "Customer"
+  },
+  discount: {
+    type: Number,
+    default: 0
+  },
+  sold_time: {
+    type: Date,
+    default: new Date( null )
   }
+}, {
+  timestamps: true
 })
 
 module.exports = mongoose.model( NAME, transactionSchema )

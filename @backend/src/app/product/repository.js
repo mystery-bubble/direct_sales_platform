@@ -27,13 +27,10 @@ const findProductByObjectId = async id => await Product.findById( id )
 const findProductById = async id => await Product.findOne( { id } )
 
 const findProductbyName = async name => {
+  let regex_object = new RegExp( name )
   return await Product.find(
     {
-      name: { 
-        $text: {
-          $search: name
-        }
-      }
+      name: { $regex: regex_object, $options: 'i' }
     }
   )
 }

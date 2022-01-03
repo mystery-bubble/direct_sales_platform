@@ -4,9 +4,10 @@ const Schema = mongoose.Schema
 const NAME = "CustomerOrigin"
 
 const customerOriginSchema = new Schema({
-  origin_ip: {
+  origin_network_address: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   customer_id: {
     type: mongoose.ObjectId,

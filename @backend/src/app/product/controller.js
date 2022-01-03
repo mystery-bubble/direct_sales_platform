@@ -62,11 +62,14 @@ exports.search = async ( req, res ) => {
   try {
     let results = await repository.findAllProduct()
     let pharse = req.query.s
-    if ( pharse !== undefined ) {
+    if ( !pharse ) {
       results = await repository.findProductbyName( pharse )
     }
+    results = results.map( function( element ) {
+      return element.toObject()
+    } )
     for ( let result of results ) {
-      // let total_sold = 0
+      let total_sold = 0
       let range = { 
         min: Infinity,
         max: -Infinity
@@ -79,14 +82,16 @@ exports.search = async ( req, res ) => {
         if ( type.purchase_price > range.max ) {
           range.max = type.purchase_price
         }
+        // total_sold += type.
       }
       result.price = range
-      // result.sold = total_sold
+      result.sold = total_sold
     }
     res.success( results )
   }
   catch ( err ) {
     res.send( err )
+    console.log( err )
   }
 }
 
