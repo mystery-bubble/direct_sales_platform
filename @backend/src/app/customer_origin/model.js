@@ -11,11 +11,15 @@ const customerOriginSchema = new Schema({
   },
   customer_id: {
     type: mongoose.ObjectId,
-    required: true
+    required: true,
+    ref: "Customer"
   },
   used_count: {
-    type: Number
+    type: Number,
+    default: 1
   }
 })
+
+customerOriginSchema.index({ origin_network_address: 1, customer_id: 1 }, { unique: true })
 
 module.exports = mongoose.model( NAME, customerOriginSchema )

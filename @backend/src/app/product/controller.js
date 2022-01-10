@@ -10,20 +10,15 @@ const repository = {
 
 exports.create = async ( req, res ) => {
   try {
-    // if ( !( await repository.findProductById( req.body.id ) ) ) {
-    //   // logger line
-    //   res.preconditionFailed("ID DUPLICATED")
-    //   return
-    // }
     logger.info( "Method: create" )
     if ( !req.body.info.id ) {
       req.body.info.id = uuid.v4()
     }
     const savedProduct = await repository.saveProduct( req.body.info )
-    const savedBonus = await repository.product_bonus.saveProductBonus( savedProduct._id, req.body.bonus )
+    await repository.product_bonus.saveProductBonus( savedProduct._id, req.body.bonus )
     for ( let index in req.body.types ) {
       req.body.types[ index ].id = uuid.v5( "type", req.body.info.id ) + `-${ index }`
-      let savedType = await repository.product_type.saveProductType( savedProduct._id, req.body.types[ index ] )
+      await repository.product_type.saveProductType( savedProduct._id, req.body.types[ index ] )
     }
 
     res.success( { "message": "Product create successfully." } )

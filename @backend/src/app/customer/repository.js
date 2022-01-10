@@ -23,4 +23,12 @@ const removeCustomer = async customer => await customer.remove()
 
 const findCustomerByObjectId = async id => await Customer.findById( id )
 
-const findCustomerByPhone = async phone => await Customer.find( { phone } )
+const findCustomerByPhone = async phone => await Customer.findOne( { phone } )
+
+module.exports = {
+  saveCustomer,
+  updateCustomer,
+  removeCustomer,
+  findCustomerByObjectId,
+  findCustomerByPhone
+}

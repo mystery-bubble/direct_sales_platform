@@ -25,3 +25,11 @@ const removeTransactionContent = async content => await content.remove()
 const findTransactionContentByObjectId = async id => await TransactionContent.findById( id )
 
 const findAllContentOfTransaction = async tid => await TransactionContent.find( { transaction_id: tid } )
+
+module.exports = {
+  saveTransactionContent,
+  updateTransactionContent,
+  removeTransactionContent,
+  findTransactionContentByObjectId,
+  findAllContentOfTransaction
+}

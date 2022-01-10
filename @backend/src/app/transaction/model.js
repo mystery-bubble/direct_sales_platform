@@ -6,16 +6,19 @@ const NAME = "Transaction"
 const transactionSchema = new Schema({
   id: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   employee_id: {
     type: String,
-    required: true,
-    index: true
+    index: true,
+    default: new mongoose.Types.ObjectId( null ) 
   },
   status: {
     type: String,
-    required: true
+    required: true,
+    enum: [ 0, 1, 2 ], // 0 for established, 1 for claimed, 2 for sold
+    default: 0
   },
   customer_id: {
     type: mongoose.ObjectId,
