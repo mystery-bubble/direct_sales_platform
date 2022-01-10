@@ -16,6 +16,12 @@ const productSchema = new Schema({
   description: {
     type: String
   }
+}, {
+  timestamps: true
+})
+
+productSchema.index({ 
+  "name": "text"
 })
 
 module.exports = mongoose.model( NAME, productSchema )

@@ -11,7 +11,8 @@ const productTypeSchema = new Schema({
   },
   product_id: {
     type: mongoose.ObjectId,
-    required: true
+    required: true,
+    ref: "Product"
   },
   title: {
     type: String,

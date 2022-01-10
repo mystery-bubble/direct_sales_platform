@@ -1,0 +1,20 @@
+2021-12-31 04:12:22:1222 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
+[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
+[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
+[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
+[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
+[31m    at IncomingMessage.emit (events.js:327:22)[39m
+[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
+[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m
+2021-12-31 04:13:27:1327 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
+[31m    at JSON.parse (<anonymous>)[39m
+[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
+[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
+[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
+[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
+[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
+[31m    at IncomingMessage.emit (events.js:327:22)[39m
+[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
+[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m

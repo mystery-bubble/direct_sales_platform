@@ -1,8 +1,8 @@
 module.exports = {
   env: "development",
-  host: "",
+  host: "localhost",
   port: 1234,
-  mongoUrl: "",
+  mongoUrl: "mongodb://localhost:27017/",
   logLevel: "debug",
   secret: "ultimateSecretZone",
   corsSettings: {

@@ -13,6 +13,9 @@ const employeeRelationsSchema = new Schema({
   recruiter: {
     type: mongoose.ObjectId,
     required: true,
+    default: function() {
+      return this.employee_id
+    },
     ref: "Employee"
   },
   leader: {
