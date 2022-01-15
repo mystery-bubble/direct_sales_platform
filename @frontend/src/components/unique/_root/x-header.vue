@@ -1,13 +1,13 @@
 <template>
   <div class="header">
     <div class="main-part">
-      <div class="logo-section">
+      <div class="logo-section" @click="goto('/')">
         <img src="@/assets/title_logo.png" alt="西河堂御品顏LOGO_圖片" class="logo-img">
         <img src="@/assets/title_text.png" alt="西河堂御品顏LOGO_文字" class="text-img">
       </div>
       <div class="action-section">
         <div class="btn-group">
-          <Icon icon="mdi:cart" class="action cart" />
+          <Icon icon="mdi:cart" class="action cart" @click.native="goto('/cart')" />
         </div>
         <div class="guide-bar">
           <div
@@ -55,6 +55,7 @@
       </div>
     </div>
     <div
+      v-if="false"
       class="sub-part"
       @mouseenter="verticalMarquee.isPaused = true"
       @mouseleave="verticalMarquee.isPaused = false"
@@ -168,7 +169,6 @@ export default {
       }
     },
     goto( route ) {
-      // console.log( route )
       if ( this.$route.path === route ) {
         return
       }

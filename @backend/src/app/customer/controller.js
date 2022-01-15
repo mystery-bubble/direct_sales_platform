@@ -13,7 +13,7 @@ exports.create = async ( req, res ) => {
       origin_network_address: remote_address
     })
   
-    res.success( { "message": "Customer create successfully." } )
+    res.success( { "message": "Customer create successfully.", "cid": savedCustomer._id } )
   }
   catch ( err ) {
     console.log( err )
@@ -31,7 +31,7 @@ exports.get = async ( req, res ) => {
       case "address":
         results = await repository.customer_origin.findCustomerOriginByAddress( remote_address )
         results = results.map( element => {
-            return element.customer_id
+            return { ...element.customer_id.toObject(), address: element.origin_network_address, used_count: element.used_count }
         }) 
         break
       case "phone":

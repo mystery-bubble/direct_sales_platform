@@ -15,6 +15,10 @@ const productSchema = new Schema({
   },
   description: {
     type: String
+  },
+  sold_count: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true

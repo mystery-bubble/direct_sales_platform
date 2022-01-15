@@ -3,7 +3,7 @@
 }
 
 .view.cart > .cart.action-part {
-  @apply flex flex-col xl:flex-row xl:mx-1 mt-2;
+  @apply flex flex-col xl:mx-1 mt-2;
 }
 
 
@@ -18,7 +18,7 @@
 }
 
 .result-section > .action-dispatch {
-  @apply self-stretch flex flex-row justify-between items-center
+  @apply self-stretch flex flex-col xl:flex-row justify-between items-center
 }
 
 .number-total > .total-sign {
@@ -42,25 +42,25 @@
 }
 
 .action-dispatch {
-  @apply my-3 ml-8 mr-3
+  @apply my-3 ml-3 xl:ml-8 mr-3
 }
 
 .action-dispatch .total-counter {
-  @apply font-semibold text-xl 
+  @apply font-semibold text-lg xl:text-xl 
 }
 
 .action-dispatch .real-total-sign {
- @apply py-1 px-3 font-semibold mr-12 text-sm bg-custom-black text-custom-white;
+ @apply py-1 px-3 font-semibold my-2 xl:mr-12 text-sm bg-custom-black text-custom-white;
 
  border-radius: 8px;
 }
 
 .action-dispatch .real-total-text {
-  @apply text-2xl mr-8 font-bold text-custom-black;
+  @apply text-2xl my-2 xl:mr-8 font-bold text-custom-black;
 }
 
 .action-dispatch .dispatch-button {
-  @apply px-32 py-8 bg-custom-dark text-2xl font-bold flex flex-row items-center text-custom-white select-none transition-colors cursor-pointer;
+  @apply px-24 xl:px-32 py-8 bg-custom-dark text-2xl font-bold flex flex-row items-center text-custom-white select-none transition-colors cursor-pointer;
 
   border-radius: 8px;
 }

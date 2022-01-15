@@ -1,14 +1,14 @@
 <template>
-  <div class="component little-product">
+  <div class="component little-product" @click="gotoInfo()">
     <div class="little-product-image">
-      <img :src="img" />
+      <img :src="imgSrc" />
     </div>
     <div class="little-product-title">
       {{ shrinkTitle }}
     </div>
     <div class="little-product-numbers">
       <div class="number sold">已售出 {{ shortsold }}</div>
-      <div class="number price">${{ price }}</div>
+      <div class="number price">{{ range }}</div>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    img: {
+    id: {
       type: String
     },
     title: {
@@ -26,7 +26,7 @@ export default {
       type: Number
     },
     price: {
-      type: Number
+      type: Object
     },
     over: {
       type: Number,
@@ -35,13 +35,29 @@ export default {
   },
   computed: {
     shortsold() {
-      return this.sold > this.over ? `${ this.over }+` : this.info.sold
+      return this.sold > this.over ? `${ this.over }+` : this.sold
     },
     shrinkTitle() {
       if ( this.title.length > 25 ) {
         return this.title.slice( 0, 26 ) + "..."
       }
       return this.title
+    },
+    range() {
+      if ( this.price.max === this.price.min ) {
+        return "$" + this.price.max
+      }
+      else {
+        return `$${ this.price.min } ~ $${ this.price.max }`
+      }
+    },
+    imgSrc() {
+      return `http://localhost:1234/api/v1/image/product/${ this.id }`
+    }
+  },
+  methods: {
+    gotoInfo() {
+      this.$router.push( `/product/${ this.id }` )
     }
   }
 }

@@ -8,21 +8,21 @@
       <input type="checkbox" :checked="isChecked" @change="changeHandler( $event.target.checked )">
     </div>
     <div class="c-item picture">
-      <img class="item-picture" :src="info.imgsrc">
+      <img class="item-picture" :src="info.imgSrc">
     </div>
     <div class="c-item shrink-content">
       <div class="title">{{ this.shrinkTitle }}</div>
       <div class="types">
         <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="clickMask">
-          <option disabled selected hidden>選擇規格</option>
-          <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id">{{ type.name }}</option>
+          <option disabled :selected="selectedOption === 0" hidden>選擇規格</option>
+          <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id" :selected="selectedOption === index + 1">{{ type.name }}</option>
         </select>
       </div>
       <div class="price">
         $ {{ info.price }}
       </div>
       <div class="amount">
-        <div class="sign" @click.stop="--info.amount">
+        <div class="sign" @click.stop="decreaseStopAt( 1 )">
           <Icon icon="mdi:minus" />
         </div>
         <div class="number">
@@ -38,8 +38,8 @@
     </div>
     <div class="c-item types">
       <select name="specs" class="drop-menu" @change="optionChangeHandler( $event.target.value )" @click.stop="clickMask">
-        <option disabled selected hidden>選擇規格</option>
-        <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id">{{ type.name }}</option>
+        <option disabled :selected="selectedOption === 0" hidden>選擇規格</option>
+        <option v-for="( type, index ) in info.types" :key="`type-${ index }`" :value="type.id" :selected="selectedOption === index + 1">{{ type.name }}</option>
       </select>
     </div>
     <div class="c-item price">$ {{ info.price }}</div>
@@ -84,6 +84,23 @@ export default {
     checked: {
       type: Boolean,
       default: false
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      default: 1
+    },
+    price: {
+      type: Number,
+      required: true,
+      default: 0
     }
   },
   data: () => ({
@@ -104,12 +121,10 @@ export default {
           name: "選項 3"
         }
       ],
-      price: 5000,
-      amount: 1000
+      price: 0
     },
     isChecked: false,
-    selectedOption: -1,
-    amountInputMode: false
+    selectedOption: 0
   }),
   methods: {
     changeHandler( state ) {
@@ -121,10 +136,43 @@ export default {
     optionChangeHandler( id ) {
       for ( let iter in this.info.types ) {
         if ( this.info.types[ iter ].id === id ) {
-          this.selectedOption = iter
+          this.selectedOption = parseInt( iter ) + 1
           return
         }
       }
+    },
+    async infoRemap() {
+      let newInfo = {
+        imgSrc: "",
+        title: "",
+        types: [],
+        price: 0,
+        amount: 0
+      }
+
+      await this.$axios.get(`http://localhost:1234/api/v1/product/${ this.id }`)
+      .then( res => {
+        newInfo.imgSrc = `http://localhost:1234/api/v1/image/product/${ this.id }`
+        newInfo.title = res.data.payload.name
+        newInfo.types = res.data.payload.types.map( element => {
+          return { id: element.id, name: element.title }
+        })
+      })
+
+      newInfo.price = this.price
+      newInfo.amount = this.amount
+      this.info = newInfo
+      this.info.types.forEach( ( element, index ) => {
+        if ( this.type === element.id ) {
+          this.selectedOption = parseInt( index ) + 1
+        } 
+      })
+    },
+    decreaseStopAt( value ) {
+      if ( this.info.amount === value ) {
+        return
+      }
+      --this.info.amount
     }
   },
   computed: {
@@ -138,9 +186,6 @@ export default {
       else {
         return this.info.title
       }
-    },
-    amount() {
-      return this.info.amount
     }
   },
   watch: {
@@ -148,13 +193,37 @@ export default {
       this.isChecked = newVal
     },
     isChecked( newVal ) {
-      this.$emit( "change", newVal )
+      this.$emit( "check", newVal )
     },
     amount( newVal, oldVal ) {
       if ( isNaN( newVal ) ) {
         this.info.amount = parseInt( oldVal )
       }
+    },
+    info: {
+      handler: function( newVal ) {
+        let newItem = {
+          id: this.id,
+          type: this.info.types[ this.selectedOption - 1 ].id,
+          price: this.info.price,
+          amount: newVal.amount
+        }
+        this.$emit( "change", newItem )
+      },
+      deep: true
+    },
+    selectedOption( newVal ) {
+      let newItem = {
+        id: this.id,
+        type: this.info.types[ newVal - 1 ].id,
+        price: this.info.price,
+        amount: this.info.amount
+      }
+      this.$emit( "change", newItem )
     }
+  },
+  async created() {
+    await this.infoRemap()
   }
 }
 </script>
