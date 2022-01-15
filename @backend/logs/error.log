@@ -1,20 +1,28 @@
-2021-12-31 04:12:22:1222 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
-[31m    at JSON.parse (<anonymous>)[39m
-[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
-[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
-[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
-[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
-[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
-[31m    at IncomingMessage.emit (events.js:327:22)[39m
-[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
-[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m
-2021-12-31 04:13:27:1327 [31merror[39m: [31mSyntaxError: Unexpected string in JSON at position 153[39m
-[31m    at JSON.parse (<anonymous>)[39m
-[31m    at parse (D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\types\json.js:89:19)[39m
-[31m    at D:\Programming\Web\direct_sales_platform\@backend\node_modules\body-parser\lib\read.js:121:18[39m
-[31m    at invokeCallback (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:224:16)[39m
-[31m    at done (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:213:7)[39m
-[31m    at IncomingMessage.onEnd (D:\Programming\Web\direct_sales_platform\@backend\node_modules\raw-body\index.js:273:7)[39m
-[31m    at IncomingMessage.emit (events.js:327:22)[39m
-[31m    at endReadableNT (internal/streams/readable.js:1327:12)[39m
-[31m    at processTicksAndRejections (internal/process/task_queues.js:80:21)[39m
+2022-01-11 20:12:34:1234 [31merror[39m: [31mError: ENOENT: no such file or directory, open 'D:\Programming\Web\direct_sales_platform\storage\employee\1dd2423c-76a6-407b-968c-4c01cacfa208'[39m
+2022-01-11 20:18:46:1846 [31merror[39m: [31mError: ENOENT: no such file or directory, open 'D:\Programming\Web\direct_sales_platform\@backend\storage\employee\1dd2423c-76a6-407b-968c-4c01cacfa208'[39m
+2022-01-11 20:29:57:2957 [31merror[39m: [31mError: ENOENT: no such file or directory, open 'D:\Programming\Web\direct_sales_platform\@backend\storage\employee\1dd2423c-76a6-407b-968c-4c01cacfa208'[39m
+2022-01-11 20:34:38:3438 [31merror[39m: [31mError: ENOENT: no such file or directory, open 'D:\Programming\Web\direct_sales_platform\@backend\storage\employee\1dd2423c-76a6-407b-968c-4c01cacfa208'[39m
+2022-01-11 20:53:16:5316 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\employee\1dd2423c-76a6-407b-968c-4c01cacfa208'[39m
+2022-01-12 12:10:05:105 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\a828ef6e-bc07-4cff-aa31-42e81d241872.png'[39m
+2022-01-12 17:48:09:489 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\a828ef6e-bc07-4cff-aa31-42e81d241872.png'[39m
+2022-01-12 17:48:13:4813 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\a828ef6e-bc07-4cff-aa31-42e81d241872.png'[39m
+2022-01-13 12:15:35:1535 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-13 14:01:43:143 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 17:34:50:3450 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\d60602a2-a576-43af-98ef-6a868ba00941.png'[39m
+2022-01-14 17:35:38:3538 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 18:51:45:5145 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:01:50:150 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:01:50:150 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:02:33:233 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:02:39:239 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:03:28:328 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:03:42:342 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:04:07:47 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:04:16:416 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:04:28:428 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:04:43:443 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:04:47:447 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:05:18:518 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:05:23:523 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:06:28:628 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m
+2022-01-14 19:06:31:631 [31merror[39m: [31mError: ENOENT: no such file or directory, stat 'D:\Programming\Web\direct_sales_platform\@backend\storage\product\undefined.png'[39m

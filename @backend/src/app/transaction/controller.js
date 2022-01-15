@@ -1,16 +1,34 @@
 const _ = require("lodash")
 const uuid = require("uuid")
+const nodemailer = require("nodemailer")
 
 const repository = {
   ...require("./repository"),
   employee: require("../employee/repository"),
   customer: require("../customer/repository"),
   customer_origin: require("../customer_origin/repository"),
-  transaction_content: require("../transaction_content/repository")
+  transaction_content: require("../transaction_content/repository"),
+  product: require("../product/repository"),
+  product_type: require("../product_type/repository")
 }
+
+const config = require("../../config")
+
+console.log( config )
+
+const postman = nodemailer.createTransport({
+  host: "smtp.zoho.com",
+  secure: true,
+  port: 465,
+  auth: {
+    user: config.zoho_auth.user,
+    pass: config.zoho_auth.password
+  },
+});
 
 exports.create = async ( req, res ) => {
   try {
+    let mailContent = "訂單內容: \r\n"
     const id = req.body.id || uuid.v4()
     const savedTransaction = await repository.saveTransaction( req.body.customer, {
       id,
@@ -18,11 +36,32 @@ exports.create = async ( req, res ) => {
       discount: req.body.discount
     } )
     for ( let order of req.body.orders ) {
+      let type_object = await repository.product_type.findTypeById( order.product )
+      let product_object = await repository.product.findProductByObjectId( type_object.product_id )
+
       await repository.transaction_content.saveTransactionContent( savedTransaction._id, {
-        product_type_id: order.product,
+        product_type_id: type_object._id,
         amount: order.amount
       })
+
+      mailContent += `${ product_object.name }     規格: ${ type_object.title }      x${ order.amount }\r\n`
     }
+
+    let customer = await repository.customer.findCustomerByObjectId( req.body.customer )
+    mailContent += `\r\n顧客資料: \r\n稱謂: ${ customer.call_as }\r\n電子信箱: ${ customer.email }\r\n電話: ${ customer.phone }`
+
+    let mailOptions = {
+      from: config.zoho_auth.user,
+      to: "service.xihetang@gmail.com",
+      subject: "新的訂單",
+      text: mailContent
+    }
+
+    postman.sendMail( mailOptions, function( err ) {
+      if ( err ) {
+        throw err
+      }
+    })
 
     res.success( { "message": "Transaction create successfully." } )
   }
@@ -55,13 +94,24 @@ exports.edit = async ( req, res ) => {
     const target = await repository.findTransactionById( req.body.id )
     const type = req.query.type
     var updatedTransaction = undefined
+    var oldStatus = target.status
 
     switch( type ) {
       case "status":
         updatedTransaction = await repository.updateTransaction( target, req.body )
-        if ( updatedTransaction.status === 1 && target.status === 0 ) {
+        if ( updatedTransaction.status === 1 && oldStatus === 0 ) {
           let target_origin = await repository.customer_origin.findCustomerOriginByCustomerAndAddress( target.customer_id, remote_address )
-          await repository.customer_origin.updateCustomerOrigin( target_origin, ++target_origin.used_count )
+          await repository.customer_origin.updateCustomerOrigin( target_origin, { used_count: target_origin.used_count + 1 } )
+        }
+        else if ( updatedTransaction.status === 2 && oldStatus === 1 ) {
+          let transaction_contents = await repository.transaction_content.findAllContentOfTransaction( target._id )
+          transaction_contents = transaction_contents.forEach( async element => {
+            let amount = element.amount
+            let type = await repository.product_type.findTypeByObjectId( element.product_type_id )
+            let product = await repository.product.findProductByObjectId( type.product_id )
+
+            await repository.product.updateProduct( product, { sold_count: product.sold_count + amount } )
+          })
         }
         break
       case "employee":

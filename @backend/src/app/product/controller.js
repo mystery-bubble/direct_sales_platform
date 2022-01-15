@@ -64,7 +64,6 @@ exports.search = async ( req, res ) => {
       return element.toObject()
     } )
     for ( let result of results ) {
-      let total_sold = 0
       let range = { 
         min: Infinity,
         max: -Infinity
@@ -77,10 +76,8 @@ exports.search = async ( req, res ) => {
         if ( type.purchase_price > range.max ) {
           range.max = type.purchase_price
         }
-        // total_sold += type.
       }
       result.price = range
-      result.sold = total_sold
     }
     res.success( results )
   }
@@ -93,8 +90,9 @@ exports.search = async ( req, res ) => {
 exports.info = async ( req, res ) => {
   try {
     const product_id = req.query.pid || req.body.product_id || req.params.pid ;
-    const target = await repository.findProductById( product_id )
-    const target_types = await repository.product_type.findAllTypesOfProduct( target._id )
+    var target = await repository.findProductById( product_id )
+    target = target.toObject()
+    var target_types = await repository.product_type.findAllTypesOfProduct( target._id )
     target.types = target_types
     res.success( target )
   }

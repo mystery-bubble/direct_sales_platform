@@ -91,10 +91,10 @@
           <div class="list content">
             <x-little-product
               v-for="( product, index ) in pagedProducts( page.now )"
+              :id="product.id"
               :key="`product-${ index }`"
-              :img="product.path"
-              :title="product.title"
-              :sold="product.sold"
+              :title="product.name"
+              :sold="product.sold_count"
               :price="product.price"
             />
           </div>
@@ -188,26 +188,10 @@ export default {
       wheelEvent: undefined
     },
     isFocused: false,
-    products: Array(18).fill(
-      {
-        path: "https://via.placeholder.com/750",
-        title: "這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品這是一個超讚的商品",
-        sold: 10000,
-        price: 99999
-      }
-    ),
+    products: [],
     types: [
       {
         name: "全部商品",
-      },
-      {
-        name: "最新商品",
-      },
-      {
-        name: "暢銷商品",
-      },
-      {
-        name: "暢銷商品",
       }
     ],
     typeActive: 0,
@@ -339,7 +323,7 @@ export default {
       // call api
     }
   },
-  mounted() {
+  async mounted() {
     var supportsPassive = false;
     try {
       window.addEventListener( "test", null, Object.defineProperty( 
@@ -356,8 +340,19 @@ export default {
     catch(e) {
       console.error( e )
     }
-    this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
-    this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+    try {
+      this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
+      this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+  
+      await this.$axios.get("http://localhost:1234/api/v1/product/search")
+                       .then( res => {
+                         this.products = res.data.payload
+                       })
+    }
+    catch ( err ) {
+      console.error( err )
+    }
   },
   watch: {
     floatOpening( newVal ) {

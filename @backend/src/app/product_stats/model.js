@@ -8,6 +8,11 @@ const productStatsSchema = new Schema({
     type: Number,
     required: true
   },
+  product_id: {
+    type: mongoose.ObjectId,
+    required: true,
+    ref: "ProductType"
+  },
   product_type_id: {
     type: mongoose.ObjectId,
     required: true,

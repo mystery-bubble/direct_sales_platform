@@ -1,18 +1,18 @@
 <template>
-  <v-sheet class="view product">
+  <div class="view product">
     <!-- <router-link class="text-xl" to="/">Back to Home</router-link> -->
     <div class="product image">
-      <img class="w-full h-auto" :src="info.imgPath">
+      <img class="w-full h-auto" :src="imgSrc">
     </div>
     <div class="product title-text">
-      {{ info.title }}
+      {{ info.name }}
     </div>
     <div class="product section-price-sold">
       <div class="product price">
-        $ {{ info.price }}
+        $ {{ currentPrice }}
       </div>
       <div class="product sold">
-        已售出 {{ info.sold }} 件
+        已售出 {{ info.sold_count }} 件
       </div>
     </div>
     <hr class="border-t border-custom-black-trn-2 my-2 self-stretch">
@@ -20,8 +20,9 @@
       <div class="type-title">種類</div>
       <div class="type-selectors">
         <div
+          @click="changeType( index )"
           class="selectors-item"
-          :class="{ 'active': index == info.typeActived }"
+          :class="{ 'active': index === typeActived }"
           v-for="( type, index ) in info.types"
           :key="`type-${ index }`"
         >
@@ -31,54 +32,79 @@
     </div>
     <hr class="border-t border-custom-black-trn-2 mt-2 mb-4 self-stretch">
     <div class="product description">
-      {{ info.description }}
+      {{ info.description || "無描述" }}
     </div>
-
-  </v-sheet>  
+    <hr class="border-t border-custom-black-trn-2 mt-4 mb-4 self-stretch">
+    <div class="product actions">
+      <div class="amount-change">
+        <div class="sign" @click.stop="decreaseStopAt( 1 )">
+          <Icon icon="mdi:minus" class="text-3xl" />
+        </div>
+        <div class="number">
+          <input v-model="amount" class="number-input text-center w-full" type="text" @click.stop="clickMask">
+        </div>
+        <div class="sign" @click.stop="++amount">
+          <Icon icon="mdi:plus" class="text-3xl" />
+        </div>
+      </div>
+      <div class="add-to-cart" @click="addItemToCart()">加入至購物車</div>
+    </div>
+  </div>  
 </template>
 
 <script>
 export default {
   data: () => ({
+    // for the fucking computed crying about I AM GETTING UNDEFINED
     info: {
-      imgPath: "https://via.placeholder.com/1000",
-      title: "我是測試是我是測試是我是測試是我是測試是我是測試是我是測試是我是測試是我是測試是我",
       types: [
         {
-          title: "test",
-          tid: "123456789"
-        },
-        {
-          title: "test",
-          tid: "123456789"
-        },
-        {
-          title: "test",
-          tid: "123456789"
-        },
-        {
-          title: "test",
-          tid: "123456789"
-        },
-        {
-          title: "test",
-          tid: "123456789"
-        },
-        {
-          title: "test",
-          tid: "123456789"
+          selling_price: 0
         }
-      ],
-      typeActived: 0,
-      price: 9999,
-      sold: 999,
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+      ]
+    },
+    typeActived: 0,
+    amount: 1,
+    
+  }),
+  async mounted() {
+    await this.$axios.get(`http://localhost:1234/api/v1/product/${ this.$route.params.pid }`)
+    .then( res => {
+      this.info = res.data.payload
+    } )
+  },
+  computed: {
+    currentPrice() {
+      return this.info.types[ this.typeActived ].selling_price
+    },
+    imgSrc() {
+      return `http://localhost:1234/api/v1/image/product/${ this.$route.params.pid }`
     }
-  })
+  },
+  methods: {
+    changeType( index ) {
+      this.typeActived = index
+    },
+    addItemToCart() {
+      this.$store.commit("addCartItem", {
+        id: this.info.id,
+        type: this.info.types[ this.typeActived ].id,
+        amount: this.amount,
+        price: this.currentPrice
+      })
+      alert("成功將商品加入購物車!")
+      console.log( this.$store.state.cart )
+    },
+    clickMask() {
+      return true
+    },
+    decreaseStopAt( value ) {
+      if ( this.amount === value ) {
+        return
+      }
+      --this.amount
+    }
+  }
 }
 </script>
 

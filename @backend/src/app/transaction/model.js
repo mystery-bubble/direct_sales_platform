@@ -15,7 +15,7 @@ const transactionSchema = new Schema({
     default: new mongoose.Types.ObjectId( null ) 
   },
   status: {
-    type: String,
+    type: Number,
     required: true,
     enum: [ 0, 1, 2 ], // 0 for established, 1 for claimed, 2 for sold
     default: 0

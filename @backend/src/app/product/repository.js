@@ -9,12 +9,13 @@ const saveProduct = async data => {
 }
 
 const updateProduct = async ( product, data ) => {
-  const { name, description } = data ;
+  const { name, description, sold_count } = data ;
   const current = product
 
   _.assign( current, {
     "name": name || current.name,
     "description": description || current.description,
+    "sold_count": sold_count || current.sold_count
   } )
 
   return await product.save()
