@@ -1,0 +1,20 @@
+name: Sync Tag Realses
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  to_Gittea:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ./.github/lib/sync
+        with:
+          target_repo_url: git@158.101.148.10:root/direct_sales_platform.git
+          ssh_private_key: ${{ secrets.GITEA_SSH_PRIVATE_KEY }}
+          ssh_port: ${{ secrets.GITEA_SERVER_SSH_PORT }}
