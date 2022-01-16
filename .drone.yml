@@ -5,9 +5,9 @@ platform:
   os: linux
   arch: arm   
 steps:
-- name: test
-  image: alpine
-  commands:
-  - echo hello
-  - echo world
-  - echo fuck you
+  - name: test
+    image: alpine
+    commands:
+    - echo hello
+    - echo world
+    - echo fuck you
