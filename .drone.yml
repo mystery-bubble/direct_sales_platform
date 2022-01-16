@@ -3,11 +3,11 @@ type: docker
 name: default
 platform:
   os: linux
-  arch: arm   
+  arch: arm64
 steps:
   - name: test
-    image: alpine
-    commands:
-    - echo hello
-    - echo world
-    - echo fuck you
+      image: alpine
+      commands:
+      - echo hello
+      - echo world
+      - echo fuck you
