@@ -6,13 +6,13 @@ platform:
   arch: arm64
 steps:
   - name: Frontend Build Test
-    image: node:17-alpine
+    image: node:14-alpine
     commands:
     - cd ./@frontend
     - npm install
     - npm run build
   - name: Backend Build Test
-    image: node:17-alpine
+    image: node:14-alpine
     commands:
     - cd ./@backend
     - npm install
