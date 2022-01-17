@@ -5,20 +5,15 @@ platform:
   os: linux
   arch: arm64
 steps:
-  - name: Environment testing
-    image: alpine
-    commands:
-    - pwd
-    - ls -alh
   - name: Frontend Build Test
     image: node:17-alpine
     commands:
-    - cd /@frontend
+    - cd ./@frontend
     - npm install
     - npm run build
   - name: Backend Build Test
     image: node:17-alpine
     commands:
-    - cd /@backend
+    - cd ./@backend
     - npm install
-    - node /src/index.js
+    - node ./src
