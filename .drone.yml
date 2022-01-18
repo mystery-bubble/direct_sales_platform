@@ -5,9 +5,15 @@ platform:
   os: linux
   arch: arm64
 steps:
-  - name: test
-    image: alpine
+  - name: Frontend Build Test
+    image: node:14-alpine
     commands:
-    - echo hello
-    - echo world
-    - echo fuck you
+    - cd ./@frontend
+    - npm install
+    - npm run build
+  - name: Backend Build Test
+    image: node:14-alpine
+    commands:
+    - cd ./@backend
+    - npm install
+    - node ./src
