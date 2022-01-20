@@ -14,8 +14,6 @@ const repository = {
 
 const config = require("../../config")
 
-console.log( config )
-
 const postman = nodemailer.createTransport({
   host: "smtp.zoho.com",
   secure: true,

@@ -39,6 +39,7 @@
               <div>商品排序</div>
               <radio-switch
                 :state="productsOrder"
+                @change="orderChange"
                 size="md"
                 text:left="降序"
                 text:right="升序"
@@ -52,7 +53,7 @@
                 class="mb-1.5"
                 :isChecked="index === filters.arrangeTarget"
                 name="arrange-choice"
-                @change="changeTarget( $event, index )"
+                @change="changeArrangeMethod( $event, index )"
               />
             </div>
             <div class="tool subtitle mt-5">商品篩選</div>
@@ -208,15 +209,15 @@ export default {
       arrange: [
         {
           title: "依照默認排序",
-          methodsParam: "arrange:default"
+          methodsParam: "default"
         },
         {
           title: "依照上架時間",
-          methodsParam: "arrange:default"
+          methodsParam: "createTime"
         },
         {
           title: "依照金額大小",
-          methodsParam: "arrange:default"
+          methodsParam: "price"
         }
       ],
       arrangeTarget: 0,
@@ -257,10 +258,11 @@ export default {
         }
       }
     },
-    changeTarget( isChecked, index ) {
+    changeArrangeMethod( isChecked, index ) {
       if ( isChecked ) {
         this.filters.arrangeTarget = index
       }
+      this.products = this.arrangedProducts()
     },
     typeClickHandler( index ) {
       if ( !this.isTypesDragging ) {
@@ -268,11 +270,11 @@ export default {
       }
     },
     pagedProducts( current ) {
-      if ( this.products.length <= this.page.maxAmount ) {
-        return this.products
+      if ( this.products.filter( element => this.inRange( element.price ) ).length <= this.page.maxAmount ) {
+        return this.products.filter( element => this.inRange( element.price ) )
       }
       else {
-        return this.products.slice( current * this.page.maxAmount , Math.min( ( current + 1 ) * this.page.maxAmount, this.products.length ) )
+        return this.products.filter( element => this.inRange( element.price ) ).slice( current * this.page.maxAmount , Math.min( ( current + 1 ) * this.page.maxAmount, this.products.length ) )
       }
     },
     pageNumbers( current ) {
@@ -321,6 +323,38 @@ export default {
       this.page.now = index
       window.scrollTo(0,0)
       // call api
+    },
+    inRange( price ) {
+      if ( price.min > this.filters.priceRange.max || price.min < this.filters.priceRange.min ) {
+        return false
+      }
+      else {
+        return true
+      }
+    },
+    arrangedProducts() {
+      if ( this.filters.arrangeTarget === 0 ) {
+        // true will be ascending, false will be decending
+        return this.products.slice().sort( ( x, y ) => {
+          return !this.productsOrder ? x.index - y.index : y.index - x.index
+        })
+      }
+      else if ( this.filters.arrangeTarget === 1 ) {
+        return this.products.slice().sort( ( x, y ) => {
+          let xDate = new Date( x.createdAt ).getTime()
+          let yDate = new Date( y.createdAt ).getTime()
+
+          return !this.productsOrder ? xDate - yDate : yDate - xDate
+        })
+      }
+      else if ( this.filters.arrangeTarget === 2 ) {
+        return this.products.slice().sort( ( x, y ) => !this.productsOrder ? x.price.min - y.price.min : y.price.min - x.price.min )
+      }
+    },
+    orderChange( value ) {
+      this.productsOrder = value
+      console.log( this.arrangedProducts() )
+      this.products = this.arrangedProducts()
     }
   },
   async mounted() {
@@ -347,6 +381,7 @@ export default {
   
       await this.$axios.get("http://localhost:1234/api/v1/product/search")
                        .then( res => {
+                         res.data.payload.forEach( ( element, index ) => element.index = index )
                          this.products = res.data.payload
                        })
     }

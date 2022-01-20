@@ -12,7 +12,7 @@
         class="outer"
         :style="`width: ${ realSize * 2 }px; height: ${ realSize }px;`">
         <div
-          :class="{ 'left': !this.state, 'right': this.state }"
+          :class="{ 'left': !this.stat, 'right': this.stat }"
           class="inner"
           :style="`width: ${ realSize - 3 }px; height: ${ realSize - 3 }px;`" 
         />
@@ -46,12 +46,15 @@ export default {
       type: String
     }
   },
+  data: () => ({
+    stat: undefined
+  }),
   methods: {
     clickHandler(){
       this.stateChange()
     },
     stateChange() {
-      this.state = !this.state
+      this.stat = !this.stat
     }
   },
   computed: {
@@ -80,6 +83,14 @@ export default {
         return this.size
       }
     }
+  },
+  watch: {
+    stat( newVal ) {
+      this.$emit( "change", newVal )
+    }
+  },
+  mounted() {
+    this.stat = this.state
   }
 }
 </script>
