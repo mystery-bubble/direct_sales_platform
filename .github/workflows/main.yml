@@ -15,6 +15,6 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/lib/sync
         with:
-          target_repo_url: git@gitea.xihetang.com.tw:root/direct_sales_platform.git
+          target_repo_url: ${{ secrets.GITEA_REPO_URL }}
           ssh_private_key: ${{ secrets.GITEA_SSH_PRIVATE_KEY }}
           ssh_port: ${{ secrets.GITEA_SERVER_SSH_PORT }}
