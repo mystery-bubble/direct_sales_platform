@@ -3,7 +3,7 @@ type: docker
 name: default
 platform:
   os: linux
-  arch: arm64
+  arch: amd64
 steps:
   - name: Frontend Build Test
     image: node:14-alpine
