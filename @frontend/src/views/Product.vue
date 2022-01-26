@@ -68,7 +68,7 @@ export default {
     
   }),
   async mounted() {
-    await this.$axios.get(`http://localhost:1234/api/v1/product/${ this.$route.params.pid }`)
+    await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/${ this.$route.params.pid }`)
     .then( res => {
       this.info = res.data.payload
     } )
@@ -78,7 +78,10 @@ export default {
       return this.info.types[ this.typeActived ].selling_price
     },
     imgSrc() {
-      return `http://localhost:1234/api/v1/image/product/${ this.$route.params.pid }`
+      return `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.$route.params.pid }`
+    },
+    apiNetwork() {
+      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
     }
   },
   methods: {

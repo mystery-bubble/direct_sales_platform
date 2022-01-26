@@ -150,9 +150,9 @@ export default {
         amount: 0
       }
 
-      await this.$axios.get(`http://localhost:1234/api/v1/product/${ this.id }`)
+      await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/${ this.id }`)
       .then( res => {
-        newInfo.imgSrc = `http://localhost:1234/api/v1/image/product/${ this.id }`
+        newInfo.imgSrc = `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.id }`
         newInfo.title = res.data.payload.name
         newInfo.types = res.data.payload.types.map( element => {
           return { id: element.id, name: element.title }
@@ -186,6 +186,9 @@ export default {
       else {
         return this.info.title
       }
+    },
+    apiNetwork() {
+      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
     }
   },
   watch: {

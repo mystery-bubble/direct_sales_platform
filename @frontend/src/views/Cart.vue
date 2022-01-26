@@ -86,7 +86,7 @@ export default {
     },
     async sendCart() {
       let possible_customer = undefined
-      await this.$axios.get( "http://localhost:1234/api/v1/customer?by=address" )
+      await this.$axios.get( `http://${ this.apiNetwork }:1234/api/v1/customer?by=address` )
       .then( res => possible_customer = res.data.payload )
       .catch( err => console.error( err ) )
 
@@ -135,7 +135,7 @@ export default {
         })
       }
 
-      await this.$axios.post("http://localhost:1234/api/v1/transaction/create", transaction)
+      await this.$axios.post(`http://${ this.apiNetwork }:1234/api/v1/transaction/create`, transaction)
       .then( res => {
         if ( !res.data.success ) {
           throw Error("API FAILED ( Transaction.create )")
@@ -181,7 +181,7 @@ export default {
         first = false
       }
 
-      await this.$axios.post( "http://loaclhost:1234/api/v1/customer/create", customer )
+      await this.$axios.post( `http://${ this.apiNetwork }:1234/api/v1/customer/create`, customer )
       .then( res => {
         if ( res.data.success ) {
           return res.data.payload.cid
@@ -215,6 +215,9 @@ export default {
   computed: {
     totalDiscount() {
       return 0
+    },
+    apiNetwork() {
+      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
     }
   }
 }
