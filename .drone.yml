@@ -2,12 +2,14 @@ kind: pipeline
 type: docker
 name: default
 steps:
-  - name: Frontend Build
+  - name: Build & Pack
     image: node:14-alpine
     commands:
     - cd ./@frontend
     - npm install
     - npm run build
+    - cd ..
+    - tar -czf release.tar.gz ./@frontend/dist ./@backend 
   - name: Secure Transfer
     image: appleboy/drone-scp
     settings:
@@ -18,13 +20,12 @@ steps:
       key:
         from_secret: vps_private_key
       port: 22
-      command_timeout: 1m
+      command_timeout: 2m
       target: /opt/web
       source: 
-        - ./@frontend/dist
-        - ./@backend
+        - release.tar.gz
   - name: Remotly restart service
-    image: appleboy/drone-acp
+    image: appleboy/drone-ssh
     settings:
       host:
         from_secret: vps_host
@@ -35,6 +36,8 @@ steps:
       port: 22
       command_timeout: 2m
       script:
+        - cd /opt/web
+        - tar -zcvf ./release.tar.gz . 
         - docker-compose down
         - rm -rf frontend
         - rm -rf backend
