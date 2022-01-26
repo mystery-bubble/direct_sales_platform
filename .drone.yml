@@ -21,8 +21,8 @@ steps:
       command_timeout: 1m
       target: /opt/web
       source: 
-      - ./@frontend/dist
-      - ./@backend
+        - ./@frontend/dist
+        - ./@backend
 - name: Remotly restart service
     image: appleboy/drone-acp
     settings:
