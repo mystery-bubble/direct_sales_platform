@@ -1,10 +1,10 @@
-name: Sync Tag Realses
+name: Mirror Repo
 
 on:
-  workflow_dispatch: {}
   push:
-    tags:
-      - "v*"
+    branches:
+      - master
+      - develop
 
 jobs:
   to_Gittea:
