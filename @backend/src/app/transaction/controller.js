@@ -19,8 +19,8 @@ const postman = nodemailer.createTransport({
   secure: true,
   port: 465,
   auth: {
-    user: config.zoho_auth.user,
-    pass: config.zoho_auth.password
+    user: config.zoho_auth.user || process.env.ZOHO_EMAIL,
+    pass: config.zoho_auth.password || process.env.ZOHO_PWD
   },
 });
 

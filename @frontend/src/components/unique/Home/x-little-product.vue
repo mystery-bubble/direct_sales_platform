@@ -52,7 +52,10 @@ export default {
       }
     },
     imgSrc() {
-      return `http://localhost:1234/api/v1/image/product/${ this.id }`
+      return `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.id }`
+    },
+    apiNetwork() {
+      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
     }
   },
   methods: {

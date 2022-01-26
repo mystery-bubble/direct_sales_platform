@@ -379,7 +379,7 @@ export default {
       this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
       this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
   
-      await this.$axios.get("http://localhost:1234/api/v1/product/search")
+      await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/search`)
                        .then( res => {
                          res.data.payload.forEach( ( element, index ) => element.index = index )
                          this.products = res.data.payload
@@ -408,6 +408,9 @@ export default {
   computed: {
     totalPages() {
       return Math.floor( this.products.length / this.page.maxAmount ) + 1
+    },
+    apiNetwork() {
+      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
     }
   }
 };
