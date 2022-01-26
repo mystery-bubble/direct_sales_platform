@@ -23,7 +23,7 @@ steps:
       source: 
         - ./@frontend/dist
         - ./@backend
-- name: Remotly restart service
+  - name: Remotly restart service
     image: appleboy/drone-acp
     settings:
       host:
