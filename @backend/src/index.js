@@ -1,5 +1,6 @@
 const express = require( "express" );
 const cors = require( "cors" )
+const helmet = require("helmet")
 
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
@@ -11,6 +12,7 @@ const ENV = process.env.NODE_ENV || config.env;
 
 app.set( "env", ENV );
 
+app
 app.use( express.json() );
 app.use( express.urlencoded( { extended: true } ) );
 app.use( cors( config.corsSettings ) )
