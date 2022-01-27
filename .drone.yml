@@ -41,7 +41,7 @@ steps:
         - sudo rm -rf frontend
         - sudo rm -rf backend
         - sudo cp -r ./@frontend/dist frontend
-        - sudo cp -r ./backend backend
+        - sudo cp -r ./@backend backend
         - sudo rm -rf @frontend
         - sudo rm -rf @backend
         - sudo docker-compose up -d
