@@ -150,9 +150,9 @@ export default {
         amount: 0
       }
 
-      await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/${ this.id }`)
+      await this.$axios.get(`${ this.apiNetwork }/api/v1/product/${ this.id }`)
       .then( res => {
-        newInfo.imgSrc = `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.id }`
+        newInfo.imgSrc = `${ this.apiNetwork }/api/v1/image/product/${ this.id }`
         newInfo.title = res.data.payload.name
         newInfo.types = res.data.payload.types.map( element => {
           return { id: element.id, name: element.title }
@@ -188,7 +188,7 @@ export default {
       }
     },
     apiNetwork() {
-      return "localhost"
+      return process.env.NODE_ENV === "development" ? "http://localhost:1234" : "https://api.xihetang.com.tw"
     }
   },
   watch: {

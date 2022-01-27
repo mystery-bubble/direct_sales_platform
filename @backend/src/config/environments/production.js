@@ -1,7 +1,7 @@
 module.exports = {
   env: "production",
   port: 1234,
-  mongoUrl: "mongodb://database/",
+  mongoUrl: process.env.MONGO_URI || "mongodb://database/",
   logLevel: "debug",
   corsSettings: null
 }

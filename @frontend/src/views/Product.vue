@@ -68,7 +68,7 @@ export default {
     
   }),
   async mounted() {
-    await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/${ this.$route.params.pid }`)
+    await this.$axios.get(`${ this.apiNetwork }/api/v1/product/${ this.$route.params.pid }`)
     .then( res => {
       this.info = res.data.payload
     } )
@@ -78,10 +78,10 @@ export default {
       return this.info.types[ this.typeActived ].selling_price
     },
     imgSrc() {
-      return `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.$route.params.pid }`
+      return `${ this.apiNetwork }/api/v1/image/product/${ this.$route.params.pid }`
     },
     apiNetwork() {
-      return "localhost"
+      return process.env.NODE_ENV === "development" ? "http://localhost:1234" : "https://api.xihetang.com.tw"
     }
   },
   methods: {

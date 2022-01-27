@@ -52,10 +52,10 @@ export default {
       }
     },
     imgSrc() {
-      return `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.id }`
+      return `${ this.apiNetwork }/api/v1/image/product/${ this.id }`
     },
     apiNetwork() {
-      return "localhost"
+      return process.env.NODE_ENV === "development" ? "http://localhost:1234" : "https://api.xihetang.com.tw"
     }
   },
   methods: {

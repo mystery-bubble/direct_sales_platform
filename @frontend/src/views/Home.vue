@@ -379,7 +379,7 @@ export default {
       this.stopScrolling.wheelOpt = supportsPassive ? { passive: false } : false;
       this.stopScrolling.wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
   
-      await this.$axios.get(`http://${ this.apiNetwork }:1234/api/v1/product/search`)
+      await this.$axios.get(`${ this.apiNetwork }/api/v1/product/search`)
                        .then( res => {
                          res.data.payload.forEach( ( element, index ) => element.index = index )
                          this.products = res.data.payload
@@ -410,7 +410,7 @@ export default {
       return Math.floor( this.products.length / this.page.maxAmount ) + 1
     },
     apiNetwork() {
-      return "localhost"
+      return process.env.NODE_ENV === "development" ? "http://localhost:1234" : "https://api.xihetang.com.tw"
     }
   }
 };
