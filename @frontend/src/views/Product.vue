@@ -81,7 +81,7 @@ export default {
       return `http://${ this.apiNetwork }:1234/api/v1/image/product/${ this.$route.params.pid }`
     },
     apiNetwork() {
-      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
+      return "localhost"
     }
   },
   methods: {

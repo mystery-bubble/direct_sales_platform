@@ -217,7 +217,7 @@ export default {
       return 0
     },
     apiNetwork() {
-      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
+      return "localhost"
     }
   }
 }

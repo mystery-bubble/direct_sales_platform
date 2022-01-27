@@ -410,7 +410,7 @@ export default {
       return Math.floor( this.products.length / this.page.maxAmount ) + 1
     },
     apiNetwork() {
-      return process.env.NODE_ENV === "development" ? "localhost" : "backend"
+      return "localhost"
     }
   }
 };
