@@ -35,14 +35,13 @@ steps:
       port: 22
       command_timeout: 2m
       script:
-        - sudo su
         - cd /opt/web
-        - cp /home/maintainer/web/* .
-        - docker-compose down
-        - rm -rf frontend
-        - rm -rf backend
-        - cp @frontend/dist frontend
-        - cp @backend backend
-        - rm -rf @frontend
-        - rm -rf @backend
-        - docker-compose up -d
+        - sudo cp -r /home/maintainer/web/* .
+        - sudo docker-compose down
+        - sudo rm -rf frontend
+        - sudo rm -rf backend
+        - sudo cp -r ./@frontend/dist frontend
+        - sudo cp -r ./backend backend
+        - sudo rm -rf @frontend
+        - sudo rm -rf @backend
+        - sudo docker-compose up -d
