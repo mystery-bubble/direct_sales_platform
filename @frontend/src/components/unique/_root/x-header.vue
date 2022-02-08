@@ -88,15 +88,15 @@ export default {
         },
         {
           title: "促銷活動",
-          route: "/test",
+          route: "/event",
         },
         {
           title: "關於我們",
-          route: "/",
+          route: "/about",
         },
         {
           title: "幫助中心",
-          route: "/",
+          route: "/help",
         }
       ]
     },
@@ -135,7 +135,11 @@ export default {
 
       // set default value
       this.verticalMarquee.items.push( this.verticalMarquee.items[ 0 ] )
-
+      for ( let page in this.guideBar.items ) {
+        if ( this.$route.path === this.guideBar.items[ parseInt( page ) ].route ) {
+          this.stateChange( this.guideBar.activated, parseInt( page ) )
+        }
+      }
       // call api
     },
     stateChange( oldIndex, newIndex ) {
@@ -214,6 +218,13 @@ export default {
       }
       else {
         this.verticalMarquee.disableTransition = false
+      }
+    },
+    "$route" () {
+      for ( let page in this.guideBar.items ) {
+        if ( this.$route.path === this.guideBar.items[ parseInt( page ) ].route ) {
+          this.stateChange( this.guideBar.activated, parseInt( page ) )
+        }
       }
     }
   }
