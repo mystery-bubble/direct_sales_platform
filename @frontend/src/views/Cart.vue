@@ -1,9 +1,22 @@
 <template>
   <div class="view cart">
-    <div class="cart main-part">
-      <div class="main actions">
-        <div class="border pa-2 rounded select-none cursor-pointer" @click="clearCart">清空購物車</div>
+    <div class="cart btn-group-part">
+      <div class="btn pick-all" v-if="!allPicked" @click="pickAll( true )">全選</div>
+      <div class="btn cancel-pick-all" v-if="allPicked" @click="pickAll( false )">取消全選</div>
+      <div class="self-center">
+        <span class="btn back" @click="deleteMode = false" v-if="deleteMode">返回</span>
+        <span class="btn delete-picked" v-if="deleteMode" @click="deletePicked">刪除選擇的項目</span>
+        <span class="btn delete-all" v-if="deleteMode" @click="deleteAll">刪除全部</span>
+        <span class="btn delete-mode" v-if="!deleteMode" @click="deleteMode = true">刪除模式</span>
       </div>
+    </div>
+    <div class="cart blank-part">
+      <span>
+        <Icon icon="mdi:cart" class="mr-3" />
+      </span>
+      購物車中還沒有任何商品！再多逛逛吧！
+    </div>
+    <div class="cart main-part" v-if="cart.length !== 0">
       <div class="main head">
         <div class="inline-block w-1/2">商品</div>
         <div class="inline-block w-1/6">單價</div>
@@ -13,12 +26,14 @@
       <span class="main-container">
         <x-cart-item
           @change="itemContentChangeHandler( index, $event )"
+          @check="checkStateChange( index, $event )"
           :class="{ 'mb-2' : index !== cart.length - 1 }"
-          v-for="( item, index ) in cart" :key="`cart-item-${ index }`"
+          v-for="( item, index ) in cart" :key="`${ item.type }`"
           :id="item.id"
           :type="item.type"
           :amount="item.amount"
           :price="item.price"
+          :checked="itemState[ index ]"
         />
       </span>
     </div>
@@ -68,7 +83,10 @@ export default {
   data: () => ({
     cart: [],
     itemCount: 0,
-    totalPrice: 0
+    totalPrice: 0,
+    deleteMode: false,
+    allPicked: false,
+    itemState: []
   }),
   methods: {
     itemContentChangeHandler( index, item ) {
@@ -199,16 +217,89 @@ export default {
         this.cart = []
         this.$store.commit("clearCart")
       }
+    },
+    checkAllPicked() {
+      for ( let state of this.itemState ) {
+        if ( !state ) {
+          this.allPicked = false
+          return
+        }
+      }
+      this.allPicked = true
+    },
+    checkStateChange( index, value ) {
+      this.itemState[ index ] = value
+      this.checkAllPicked()
+    },
+    pickAll( reversed ) {
+      if ( reversed ) {
+        for ( let index in this.itemState ) {
+          this.itemState[ index ] = true
+        }
+        this.checkAllPicked()
+      }
+      else {
+        for ( let index in this.itemState ) {
+          this.itemState[ index ] = false 
+        }
+        this.checkAllPicked()
+      }
+    },
+    deletePicked() {
+      let deleteCount = 0
+      for ( let state of this.itemState ) {
+        if ( state ) {
+          ++deleteCount
+        }
+      }
+
+      let delete_confirm = confirm(`您確定要執行刪除動作嗎？\r\n您將會刪除 ${ deleteCount } 個物品。`)
+      if ( delete_confirm ) {
+        for ( let index in this.itemState ) {
+          if ( this.itemState[ index ] ) {
+            this.cart.splice( index, 1 )
+            this.$store.commit( "removeCartItem", index )
+          }
+        }
+        this.itemState = this.itemState.filter( state => state === false )
+        
+        let newItemCount = 0
+        let newTotalPrice = 0
+
+        for ( let item of this.cart ) {
+          newItemCount += item.amount
+          newTotalPrice += ( item.amount * item.price )
+        }
+
+        this.itemCount = newItemCount
+        this.totalPrice = newTotalPrice
+        this.deleteMode = false
+      }
+    },
+    deleteAll() {
+      let delete_confirm = confirm(`您確定要執行刪除動作嗎？\r\n您將會刪除 ${ this.cart.length } 個物品。`)
+      if ( delete_confirm ) {
+        for ( let index in this.cart ) {
+          this.cart.splice( index, 1 )
+          this.$store.commit( "removeCartItem", index )
+        }
+
+        this.itemState = []
+        this.itemCount = 0
+        this.totalPrice = 0
+        this.deleteMode = false
+      }
     }
   },
   mounted() {
     this.$store.commit("refreshCart")
     this.cart = this.$store.state.cart
 
-    if ( this.cart ) {
+    if ( this.cart.length !== 0 && Array.isArray( this.cart ) ) {
       for ( let item of this.cart ) {
         this.itemCount += item.amount
         this.totalPrice += ( item.amount * item.price )
+        this.itemState.push( false )
       }
     }
   },

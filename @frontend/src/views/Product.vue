@@ -11,8 +11,11 @@
       <div class="product price">
         $ {{ currentPrice }}
       </div>
-      <div class="product sold">
+      <!-- <div class="product sold">
         已售出 {{ info.sold_count }} 件
+      </div> -->
+      <div class="product sold">
+        熱銷中
       </div>
     </div>
     <hr class="border-t border-custom-black-trn-2 my-2 self-stretch">

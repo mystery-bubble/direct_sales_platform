@@ -7,7 +7,8 @@
       {{ shrinkTitle }}
     </div>
     <div class="little-product-numbers">
-      <div class="number sold">已售出 {{ shortsold }}</div>
+      <!-- <div class="number sold">已售出 {{ shortsold }}</div> -->
+      <div class="number sold">熱銷中</div>
       <div class="number price">{{ range }}</div>
     </div>
   </div>

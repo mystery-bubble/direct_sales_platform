@@ -89,7 +89,10 @@
               <input spellcheck="false" @focus="changeFocusState" @blur="changeFocusState" class="search-input-field" type="text">
             </div>
           </div>
-          <div class="list content">
+          <div class="content-none" v-if="searchEmpty()">
+            找不到任何商品
+          </div>
+          <div class="list content" v-if="!searchEmpty()">
             <x-little-product
               v-for="( product, index ) in pagedProducts( page.now )"
               :id="product.id"
@@ -355,6 +358,9 @@ export default {
       this.productsOrder = value
       console.log( this.arrangedProducts() )
       this.products = this.arrangedProducts()
+    },
+    searchEmpty() {
+      return this.products.length === 0
     }
   },
   async mounted() {
