@@ -45,7 +45,7 @@ steps:
         - sudo cp -r ./@backend backend
         - sudo rm -rf @frontend
         - sudo rm -rf @backend
-        - sudo docker-compose up -d
+        - sudo docker-compose up --build --force-recreate -d
         
 trigger:
   branch:
