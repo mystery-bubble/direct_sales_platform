@@ -23,6 +23,7 @@ steps:
       source:
         - ./@frontend/dist
         - ./@backend
+        - ./nginx.conf
   - name: Remotly restart service
     image: appleboy/drone-ssh
     settings:
@@ -45,3 +46,8 @@ steps:
         - sudo rm -rf @frontend
         - sudo rm -rf @backend
         - sudo docker-compose up -d
+        
+trigger:
+  branch:
+    - develop
+    - master
